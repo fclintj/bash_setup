@@ -10,7 +10,7 @@ main(){
 handleopts "$@"
 
 # check if proper packages are installed 
-check_install vim
+check_install vim-gnome
 check_install tmux
 check_install exuberant-ctags
 

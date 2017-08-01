@@ -258,6 +258,10 @@ function date_tag() {
 # turn on vim commands in terminal
 set -o vi
 
+case $- in *i*)
+        [ -z "$TMUX" ] && exec tmux
+esac
+
 # pipe output from terminal into clipboard
 alias "c=xclip"
 alias "v=xclip -o"

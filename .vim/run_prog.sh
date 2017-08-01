@@ -25,6 +25,17 @@ main()
         name=$1
         ./${name%.*} $output
 
+    elif [[ $1 == *.py ]]; then
+        start=$(date +%s%3N)
+        python $1 $output
+
+    elif [[ $1 == *.pyx ]]; then
+        cython $1
+        name=$1
+        gcc -Wall -O2 -g -lm -shared -pthread -fPIC -fwrapv -fno-strict-aliasing -I/usr/include/python3.5 -o ${name%.*}.so ${name%.*}.c
+        start=$(date +%s%3N)
+        python3 -c "import ${name%.*}; ${name%.*}.main()"
+
     else
         echo Not an executable file type. Edit file ~/.vim/exec.sh
         exit 0
