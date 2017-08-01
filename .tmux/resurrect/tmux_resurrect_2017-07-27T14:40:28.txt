@@ -1,0 +1,6 @@
+pane	0	0	:bash	1	:*	0	:	0	bash	:
+pane	0	0	:bash	1	:*	1	:	0	bash	:
+pane	0	0	:bash	1	:*	2	:	1	bash	:
+pane	0	0	:bash	1	:*	3	:	0	bash	:
+window	0	0	1	:*	73a8,168x47,0,0{84x47,0,0[84x23,0,0,0,84x23,0,24{42x23,0,24,2,41x23,43,24,3}],83x47,85,0,1}
+state	0	
