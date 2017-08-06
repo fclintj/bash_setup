@@ -13,6 +13,7 @@ handleopts "$@"
 check_install vim-gnome
 check_install tmux
 check_install exuberant-ctags
+check_install gdb
 
 # YCM
 sudo apt-get install build-essential cmake
@@ -22,6 +23,7 @@ echo Backup files created:
 cp_backup config/.vimrc ~/
 cp_backup config/.tmux.conf ~/
 cp_backup config/.bashrc ~/
+cp_backup config/.inputrc ~/
 cp_backup .tmux ~/
 cp_backup .vim ~/
 
