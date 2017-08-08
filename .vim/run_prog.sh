@@ -36,6 +36,16 @@ main()
         start=$(date +%s%3N)
         python3 -c "import ${name%.*}; ${name%.*}.main()"
 
+    elif [[ $1 == *.tex ]]; then
+        name=$1
+        if [[ ! -d build ]]; then
+            mkdir build
+        fi
+        start=$(date +%s%3N)
+        TEXINPUTS="~/.latex/" xelatex -output-directory=build $name
+        mv build/${name%.*}.pdf ./
+        # okular ${name%.*}.pdf &
+
     else
         echo Not an executable file type. Edit file ~/.vim/exec.sh
         exit 0

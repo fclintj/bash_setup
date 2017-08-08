@@ -14,6 +14,9 @@
     set undofile       " maintain undo history between sessions
     set undodir=~/.vim/undodir
     set foldmethod=indent 
+    set ignorecase     " will search case insensitive if all lowercase 
+    set smartcase      " if string includes Cap then sensitive. 
+                       " /copyright\C " Case sensitive 
     set nocompatible
      "":set mouse=a
 
@@ -55,7 +58,7 @@
     let g:ycm_always_populate_location_list = 1 " filter through errors
     noremap <c-n> :lne <CR>
     autocmd FileType c,cpp,java setlocal commentstring=//\ %s " set comment as // for c and cpp
-    let g:vimwiki_list = [{'path' : '/mnt/CE6C52926C527565/Users/clint/Google\ Drive/dev/vimwiki'}]  " set new default vimwiki folder 
+    let g:vimwiki_list = [{'path' : '~/.vimwiki'}]  " set new default vimwiki folder 
 
 "" ┌────────────────────┐
 "" │ search/replace all │

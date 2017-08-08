@@ -7,7 +7,7 @@
 # └────────────────────────┘
     case $- in # If not running interactively, don't do anything  
         *i*) ;;
-          *) return;;
+          *) ;;
     esac
     
     # don't put duplicate lines or lines starting with space in the history.
@@ -45,7 +45,7 @@
     # uncomment for a colored prompt, if the terminal has the capability; turned
     # off by default to not distract the user: the focus in a terminal window
     # should be on the output of commands, not on the prompt
-    #force_color_prompt=yes
+    force_color_prompt=yes
     
     if [ -n "$force_color_prompt" ]; then
         if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
@@ -251,6 +251,13 @@ function date_tag() {
     typeset YEAR=$(date -d "$D" '+%y') 
     echo $YEAR$MONTH$DAY
 }
+# ┌────────────────────────┐
+# │     color settings     │
+# └────────────────────────┘
+alias ls='ls --color'
+LS_COLORS='di=34;42:fi=0:ln=31:pi=5:so=5:bd=5:cd=5:or=31:mi=0:ex=32:*.rpm=90'
+export LS_COLORS
+# http://linux-sxs.org/housekeeping/lscolors.html 
 
 # ┌────────────────────────┐
 # │  General Instructions  │
