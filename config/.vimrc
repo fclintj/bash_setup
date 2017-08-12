@@ -51,14 +51,16 @@
     map <C-b> :NERDTreeToggle <CR>
     let g:auto_save = 1 " enable AutoSave on vim startup
     let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py" " c++ semantics
-    let g:ycm_filetype_blacklist = { 'tex' : 1}
+    " let g:ycm_filetype_blacklist = { 'tex' : 1}
     let g:ycm_key_list_select_completion=[]     " ycm uses ctrl+n for next
     let g:ycm_key_list_previous_completion=[]   " ycm uses ctrl+p for previous
     set completeopt-=preview        " turn off [preview] for ycm
     let g:ycm_always_populate_location_list = 1 " filter through errors
     noremap <c-n> :lne <CR>
     autocmd FileType c,cpp,java setlocal commentstring=//\ %s " set comment as // for c and cpp
-    let g:vimwiki_list = [{'path' : '~/.vimwiki'}]  " set new default vimwiki folder 
+    let g:vimwiki_list = [{'path' : '/mnt/CE6C52926C527565/Users/clint/Google\ Drive/dev/vimwiki'}]  " set new default vimwiki folder 
+    " setup DirDiff excluded files
+    let g:DirDiffExcludes = ".git*,.swp"
 
 "" ┌────────────────────┐
 "" │ search/replace all │
@@ -75,10 +77,6 @@
     noremap <F3> :w<CR> :%TOhtml<CR>:x <CR> 
     inoremap <F3> <ESC> :w<CR> :make<CR> <CR> 
 
-    "" build latex document
-    noremap <F4> :w<CR> :!xelatex -output-directory=output %<CR> <CR>
-    inoremap <F4> <ESC> :w<CR> :!xelatex -output-directory=output %<CR> <CR>
-
     "" debug c program with CounqueGDB
     noremap <F5> :w<CR> :make<CR> :ConqueGdb  "%<"<CR> 
     let g:ConqueTerm_StartMessages = 0
@@ -88,8 +86,8 @@
     let g:ConqueTerm_ReadUnfocused = 1
 
     "" make program from terminal―to add blank "params" file, add "echo -n >params" to file
-    noremap <F9> :w<CR> :!clear;bash ~/.vim/cpMakefile.sh %<CR>:!make<CR>
-    inoremap <F9> <ESC> :w<CR> :!clear;bash ~/.vim/cpMakefile.sh %<CR>:!make<CR>
+    noremap <F9> :w<CR> :!clear;bash ~/.vim/make_prog.sh %<CR>
+    inoremap <F9> <ESC> :w<CR> :!clear;bash ~/.vim/make_prog.sh %<CR>
 
     "" run program automatically from terminal 
     noremap <F10> :w<CR>:silent !clear<CR>:!~/.vim/run_prog.sh %<CR>
@@ -102,4 +100,6 @@
 map tw vipgqvipgc
 "" join broken line with comments into single paragraph
 map tj vipgcvipJvipgc
-
+vnoremap <C-y> "+y 
+nnoremap <C-y>y "+yy
+nnoremap <C-P> "+P 

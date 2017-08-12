@@ -251,12 +251,17 @@ function date_tag() {
     typeset YEAR=$(date -d "$D" '+%y') 
     echo $YEAR$MONTH$DAY
 }
+
+function mkcd() {
+    mkdir $1
+    cd $1
+}
 # ┌────────────────────────┐
 # │     color settings     │
 # └────────────────────────┘
-alias ls='ls --color'
-LS_COLORS='di=34;42:fi=0:ln=31:pi=5:so=5:bd=5:cd=5:or=31:mi=0:ex=32:*.rpm=90'
-export LS_COLORS
+# alias ls='ls --color'
+# LS_COLORS='di=34;42:fi=0:ln=31:pi=5:so=5:bd=5:cd=5:or=31:mi=0:ex=32:*.rpm=90'
+# export LS_COLORS
 # http://linux-sxs.org/housekeeping/lscolors.html 
 
 # ┌────────────────────────┐
@@ -282,3 +287,9 @@ alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
 alias lslarge='find -type f -exec ls -s {} \; | sort -n -r | head -5 | pv'
+
+# directory/file locations
+
+alias drive='cd /mnt/CE6C52926C527565/Users/clint/Google\ Drive/'
+alias wiki='vim /mnt/CE6C52926C527565/Users/clint/Google\ Drive/dev/vimwiki/index.wiki'
+alias cdwiki='vim /mnt/CE6C52926C527565/Users/clint/Google\ Drive/dev/vimwiki/index.wiki'
