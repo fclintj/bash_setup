@@ -15,10 +15,11 @@
     set undodir=~/.vim/undodir
     set foldmethod=indent 
     set ignorecase     " will search case insensitive if all lowercase 
-    set smartcase      " if string includes Cap then sensitive. 
+    set smartcase      " if string includes Cap then sensitive 
                        " /copyright\C " Case sensitive 
     set nocompatible
-     "":set mouse=a
+    set display+=lastline " show as much as possible of last line 
+    "":set mouse=a
 
 "" ┌───────────────────┐
 "" │    theme setup    │
@@ -72,6 +73,9 @@
 "" ┌───────────────────┐
 "" │   build programs  │
 "" └───────────────────┘
+
+    " Build a latex environment with new command
+    :command ResaerchPaper !~/.latex/scripts/research_paper.sh
 
     "" export vim console to html
     noremap <F3> :w<CR> :%TOhtml<CR>:x <CR> 

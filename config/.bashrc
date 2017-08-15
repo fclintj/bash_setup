@@ -129,9 +129,6 @@
 # ┌────────────────────────┐
 # │   Directory aliasing   │
 # └────────────────────────┘
-# personal directories
-alias cdHill="cd ~/Google\ Drive/Work/Hill\ AFB/"
-alias cdJournal="cd ~/Google\ Drive/Journaling/vim_journal"
 
 # ┌────────────────────────┐
 # │  Formatting Functions  │
@@ -255,6 +252,10 @@ function date_tag() {
 function mkcd() {
     mkdir $1
     cd $1
+}
+function cdl() {
+    cd $1 
+    ls
 }
 # ┌────────────────────────┐
 # │     color settings     │
