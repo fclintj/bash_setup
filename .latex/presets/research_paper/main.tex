@@ -19,9 +19,9 @@
 %  │     Extra Packages     │
 %  └────────────────────────┘
     \usepackage[utf8]{inputenc}	% allows new character options
+    \usepackage[a4paper]{geometry}   % Paper dimensions and margins
     \usepackage{fancyhdr}   % include document header
     \usepackage{amsmath}    % allows equations to be split
-    \usepackage{geometry}   % Paper dimensions and margins
     \usepackage{enumitem}   % create lists
     \usepackage{graphicx}	% manage images and graphics
     \usepackage{hyperref}	% creates hyper-link color options
@@ -30,7 +30,8 @@
     \usepackage{xstring}    % StrSubstitute replace character
     \usepackage{floatrow}	% allows placement of figures [H]
     \usepackage{url}    	% package for url links
-
+    \usepackage{titletoc}   % change Table of Contents settings
+ 
 %  ┌────────────────────────┐
 %  │   General Functions    │
 %  └────────────────────────┘
@@ -80,6 +81,12 @@
         \let\Title\@title
         \let\Date\@date
         \let\Author\@author
+
+        \renewcommand{\thesubsection}{\hspace{-1em}}
+        \renewcommand{\thesection}{\hspace{-1em}}
+        \renewcommand{\partname}{}
+        \renewcommand{\thepart}{}
+
         \newgeometry{left=1in,bottom=1in,right=1in,top=1in} % page dims
         \setlength\parindent{0pt}	% set no tab on new paragraphs
         \parskip = \baselineskip	% set single skip after paragraphs
@@ -123,7 +130,14 @@
     \newcommand{\createTableOfContents} {
         \pagenumbering{roman}
         \clearpage
+        \newdimen\punktik
+        \def\cvak{\ifdim\punktik<6pt \global\punktik=3pt \else\global\punktik=3pt \fi}
+        \def\tocdots{\cvak\leaders\hbox to10pt{\kern\punktik.\hss}\hfill}
 
+        \titlecontents{section}[0em]{\vskip -1em}{}{\itshape}{\hfill\thecontentspage}
+
+        \titlecontents{subsection}[1em]{\vskip -1em}{}{} {\tocdots\thecontentspage}
+        
         \tableofcontents 
 
         \clearpage
@@ -141,8 +155,8 @@
         \pagestyle{fancy}
         \fancyhf{}
         % \fancyhead[L]{Top Left}
-        \fancyhead[R]{\nouppercase\leftmark}
         \fancyhead[L]{\Title}
+        \fancyhead[R]{\nouppercase\leftmark}
         % \fancyhead[R]{Top Right}
         \renewcommand{\headrulewidth}{0.5pt}
         %\fancyfoot[L]{Bottom Left}
