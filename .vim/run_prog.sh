@@ -42,10 +42,13 @@ main()
             mkdir build
         fi
         start=$(date +%s%3N)
-        TEXINPUTS="~/.latex/" xelatex -output-directory=build $name
+        xelatex -output-directory=build $name
         mv build/${name%.*}.pdf ./
-        # okular ${name%.*}.pdf &
-
+        if ps aux | grep okular | grep -v grep 
+        then echo
+        else
+            okular ${name%.*}.pdf &
+        fi
     else
         echo Not an executable file type. Edit file ~/.vim/exec.sh
         exit 0
@@ -82,4 +85,3 @@ function return_time() {
 }
 
 main "$@"
-

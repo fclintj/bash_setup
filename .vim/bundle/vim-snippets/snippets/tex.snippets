@@ -1,8 +1,16 @@
 #version 1
 #PREAMBLE
 #newcommand
+
+
+# Personal Snippets
 snippet nc \newcommand
+	\\newcommand{\\${1:cmd}} {
+		${0}
+	}
+snippet ncf \newcommand
 	\\newcommand{\\${1:cmd}}[${2:opt}]{${3:realcmd}} ${0}
+
 #usepackage
 snippet up \usepackage
 	\\usepackage[${1:options}]{${2:package}} ${0}
