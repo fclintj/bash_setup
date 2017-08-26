@@ -31,7 +31,8 @@
     \usepackage{floatrow}	% allows placement of figures [H]
     \usepackage{url}    	% package for url links
     \usepackage{titletoc}   % change Table of Contents settings
- 
+    \usepackage{caption}    % removes figure from LoF: \caption[]{}
+
 %  ┌────────────────────────┐
 %  │   General Functions    │
 %  └────────────────────────┘
@@ -113,7 +114,12 @@
             ECE 3640: Final Project
 
             \vspace{2.5cm}
-            \newFigure{media/title.png}[Filter Attributes][0.45]
+                \begin{figure}[H]
+                \begin{center}
+                \includegraphics[width=0.45\textwidth]{media/title.png}
+                    \caption[]{Title Page Image}
+                \end{center}
+                \end{figure} 
             \vspace{2.5cm}
 
             \Author \vspace{-1em}
@@ -174,8 +180,6 @@
         \section{Pre Lab}\label{_prelab}
         This is a test portion of the document to see if it will work in  \reff{_prelab}. I am not sure what I will be able to do all of the time.
 
-        
-        Here is a new paragraph. 
     }
 
 \begin{document}

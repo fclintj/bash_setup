@@ -294,3 +294,5 @@ alias lslarge='find -type f -exec ls -s {} \; | sort -n -r | head -5 | pv'
 alias drive='cd /mnt/CE6C52926C527565/Users/clint/Google\ Drive/'
 alias wiki='vim /mnt/CE6C52926C527565/Users/clint/Google\ Drive/dev/vimwiki/index.wiki'
 alias cdwiki='vim /mnt/CE6C52926C527565/Users/clint/Google\ Drive/dev/vimwiki/index.wiki'
+alias cdjournal="cd /mnt/CE6C52926C527565/Users/clint/Google\ Drive/Journaling/vim_journal"
+# alias python='python3'

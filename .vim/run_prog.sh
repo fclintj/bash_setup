@@ -1,6 +1,7 @@
 #!/bin/bash
 main() 
 {
+    name=$1
     # get parameters, if available
     for i in $(<params)
     do output+=" $i"
@@ -20,21 +21,33 @@ main()
         swift $1 $output
 
     elif [[ $1 == *.cpp || $1 == *.c ]]; then
-        make -s
-        start=$(date +%s%3N)
-        name=$1
-        ./${name%.*} $output
+        clear
+        echo  "-------- Building --------"
+        make -sC ../build/
+        if [ $? -eq 0 ] 
+        then
+            clear
+            echo  "-------- Running ---------"
+            ctags -Rf .tags . 
+            start=$(date +%s%3N)
+            name=$1
+            ../build/${name%.*} $output
+        else
+            start=$(date +%s%3N)
+            echo "Could not compile" 
+        fi 
 
     elif [[ $1 == *.py ]]; then
         start=$(date +%s%3N)
         python $1 $output
 
     elif [[ $1 == *.pyx ]]; then
-        cython $1
+        cython --embed $1
         name=$1
-        gcc -Wall -O2 -g -lm -shared -pthread -fPIC -fwrapv -fno-strict-aliasing -I/usr/include/python3.5 -o ${name%.*}.so ${name%.*}.c
+        gcc -I /usr/include/python3.5m -o ${name%.*} ${name%.*}.c -lpython3.5m
         start=$(date +%s%3N)
-        python3 -c "import ${name%.*}; ${name%.*}.main()"
+        rm ${name%.*}.c 
+        ./${name%.*} $output 
 
     elif [[ $1 == *.tex ]]; then
         name=$1
@@ -62,7 +75,6 @@ main()
 }
 
 function return_time() {
-
     hours=$(($1/3600000))
     minutes=$((($1-$hours*3600000)/60000))
     seconds=$(($1%60000))

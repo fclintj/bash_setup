@@ -9,30 +9,44 @@ if [[ $1 == *.sh ]]; then
     chmod -x $1
 
 elif [[ $1 == *.cpp || $1 == *.c ]]; then
-    if [[ ! $(find -iname makefile*) ]]
-    then
-        if [[ $(find ~/.vim/ -maxdepth 1 -iname Makefile ) ]]
-        then    
-            echo Creating new makefile from ~/.vim/Makefile 
-            cp ~/.vim/Makefile "$curr_dir"
-            sed -i "s/program/$name/" Makefile 
-            sed -i "s/program/${name%.*}/" Makefile 
-        else echo Error: No default Makefile found in ~/.vim/
-        fi
-    else echo Makefile exists
+    if [[ ! -d ../source ]]; then
+        mkdir source
+        mv $name source
+        mkdir build
+        cd source
+        curr_dir+=/source
     fi
-    make -s
+
+    if [[ ! -d ../build ]]; then
+        mkdir ../build
+    fi
+
+    rm -fr ../build/* 
+
+    if [[ ! -e CMakeLists.txt ]]; then
+        if [[ -e ~/.vim/CMakeLists.txt  ]]; then
+            echo Creating new CMakeLists.txt from ~/.vim/CMakeLists.txt 
+            cp ~/.vim/CMakeLists.txt "$curr_dir"
+            sed -i "s/project_name/${name%.*}/" CMakeLists.txt 
+            sed -i "s/file_name/$name/" CMakeLists.txt 
+        else echo Error: No default CMakeLists found in ~/.vim/
+        fi
+    else echo CMakeLists already exists
+    fi
+    cd ../build    
+    cmake ../source
+    make
 
 elif [[ $1 == *.py ]]; then
     start=$(date +%s%3N)
     python $1 $output
 
 elif [[ $1 == *.pyx ]]; then
-    cython $1
+    cython $1 
     name=$1
     gcc -Wall -O2 -g -lm -shared -pthread -fPIC -fwrapv -fno-strict-aliasing -I/usr/include/python3.5 -o ${name%.*}.so ${name%.*}.c
-    # start=$(date +%s%3N)
-    # python3 -c "import ${name%.*}; ${name%.*}.main()"
+    start=$(date +%s%3N)
+    python3 -c "import ${name%.*}; ${name%.*}.main()"
 
 elif [[ $1 == *.tex ]]; then
     if [[ ! -d build ]]; then

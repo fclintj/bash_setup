@@ -1,0 +1,36 @@
+Manifest-Version: 1.0
+Built-By: dnaber
+Class-Path: libs/languagetool-core.jar libs/commons-lang3.jar libs/gua
+ va.jar libs/jna.jar libs/morfologik-fsa.jar libs/morfologik-fsa-build
+ ers.jar libs/morfologik-speller.jar libs/morfologik-stemming.jar libs
+ /hppc.jar libs/segment.jar libs/commons-logging.jar libs/language-det
+ ector.jar libs/jsonic.jar libs/annotations.jar libs/lucene-core.jar l
+ ibs/lucene-backward-codecs.jar libs/berkeleylm.jar libs/jackson-datab
+ ind.jar libs/jackson-annotations.jar libs/jackson-core.jar libs/langu
+ agetool-gui-commons.jar libs/languagetool-commandline.jar libs/langua
+ getool-server.jar libs/language-all.jar libs/language-en.jar libs/ope
+ nnlp-tools.jar libs/opennlp-tokenize-models.jar libs/opennlp-postag-m
+ odels.jar libs/opennlp-chunk-models.jar libs/language-fa.jar libs/lan
+ guage-fr.jar libs/hunspell-native-libs.jar libs/language-de.jar libs/
+ german-pos-dict.jar libs/openregex.jar libs/jwordsplitter.jar libs/la
+ nguage-de-DE-x-simple-language.jar libs/language-pl.jar libs/language
+ -ca.jar libs/catalan-pos-dict.jar libs/language-it.jar libs/language-
+ br.jar libs/language-nl.jar libs/language-pt.jar libs/language-ru.jar
+  libs/language-ast.jar libs/language-be.jar libs/language-zh.jar libs
+ /ictclas4j.jar libs/commons-lang.jar libs/cjftransform.jar libs/langu
+ age-da.jar libs/language-eo.jar libs/language-gl.jar libs/language-el
+ .jar libs/morphology-el.jar libs/language-ja.jar libs/lucene-gosen-ip
+ adic.jar libs/icu4j.jar libs/language-km.jar libs/language-ro.jar lib
+ s/language-sk.jar libs/language-sl.jar libs/language-es.jar libs/lang
+ uage-sv.jar libs/language-ta.jar libs/language-tl.jar libs/language-u
+ k.jar libs/morfologik-ukrainian-lt.jar libs/languagetool-tools.jar li
+ bs/commons-cli.jar libs/morfologik-tools.jar libs/jcommander.jar libs
+ /slf4j-nop.jar libs/slf4j-api.jar libs/languagetool-core-tests.jar li
+ bs/junit.jar libs/hamcrest-core.jar libs/commons-io.jar libs/commons-
+ collections4.jar ./ languagetool-server.jar
+ComponentVersion: 3.8
+Implementation-Date: 2017-06-27 11:29
+Created-By: Apache Maven 3.3.9
+Build-Jdk: 1.8.0_121
+Main-Class: org.languagetool.gui.Main
+

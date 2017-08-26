@@ -12,8 +12,9 @@
     set showbreak=...  " adds "..." at wrapped line
     set noruler        " set row and col number at bottom
     set undofile       " maintain undo history between sessions
-    set undodir=~/.vim/undodir
-    set foldmethod=indent 
+    set undodir=~/.vim/undodir 
+    set foldmethod=indent " set nocompatible
+    set display+=lastline " show as much as possible of last line 
     set ignorecase     " will search case insensitive if all lowercase 
     set smartcase      " if string includes Cap then sensitive 
                        " /copyright\C " Case sensitive 
@@ -49,10 +50,8 @@
     execute pathogen#infect()  
     syntax on
     filetype plugin indent on
-    map <C-b> :NERDTreeToggle <CR>
     let g:auto_save = 1 " enable AutoSave on vim startup
     let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py" " c++ semantics
-    " let g:ycm_filetype_blacklist = { 'tex' : 1}
     let g:ycm_key_list_select_completion=[]     " ycm uses ctrl+n for next
     let g:ycm_key_list_previous_completion=[]   " ycm uses ctrl+p for previous
     set completeopt-=preview        " turn off [preview] for ycm
@@ -63,11 +62,20 @@
     " setup DirDiff excluded files
     let g:DirDiffExcludes = ".git*,.swp"
 
+    " allow grammar check on entire document
+    let g:languagetool_jar='$HOME/.vim/bundle/vim-LanguageTool/languagetool-commandline.jar'
+    let g:languagetool_lang='en'
+    let g:languagetool_disable_rules='COMMA_PARENTHESIS_WHITESPACE,WHITESPACE_RULE,EN_QUOTES'
+    let g:ycm_python_binary_path = 'python'
+    " map <C-b> :NERDTreeToggle <CR>
+    
+
+    
 "" ┌────────────────────┐
 "" │ search/replace all │
 "" └────────────────────┘
 
-    "" in visual mode, press ctrl+v, type, and accept with y/n
+    "" in visual mode, press ctrl+r, type, and accept with y/n
     vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
 
 "" ┌───────────────────┐
@@ -77,7 +85,7 @@
     " Build a latex environment with new command
     :command ResaerchPaper !~/.latex/scripts/research_paper.sh
 
-    "" export vim console to html
+    "" export vim console to HTML
     noremap <F3> :w<CR> :%TOhtml<CR>:x <CR> 
     inoremap <F3> <ESC> :w<CR> :make<CR> <CR> 
 
@@ -96,14 +104,19 @@
     "" run program automatically from terminal 
     noremap <F10> :w<CR>:silent !clear<CR>:!~/.vim/run_prog.sh %<CR>
     inoremap <F10> <ESC> :w<CR>:silent !clear<CR>:!~/.vim/run_prog.sh %<CR>
+    
+    "" read ctags even if they are created in hidden file
+    set tags=./tags;,tags;./.tags;,.tags;
 
 "" ┌───────────────────┐
 "" │ general commands  │
 "" └───────────────────┘
-"" break line up into readable lengths
-map tw vipgqvipgc
-"" join broken line with comments into single paragraph
-map tj vipgcvipJvipgc
-vnoremap <C-y> "+y 
-nnoremap <C-y>y "+yy
-nnoremap <C-P> "+P 
+
+    "" break line up into readable lengths
+    map tw vipgqvipgc
+    "" join broken line with comments into single paragraph
+    map tj vipgcvipJvipgc
+    vnoremap <C-y> "+y 
+    nnoremap <C-y>y "+yy
+    nnoremap <C-P> "+P 
+    map g= ggVG=``

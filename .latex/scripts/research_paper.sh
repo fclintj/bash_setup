@@ -11,4 +11,5 @@ fi
 
 mv main.tex $file_name
 echo Navigate to new file
+vim $file_name
 

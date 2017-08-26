@@ -2,12 +2,26 @@
 #PREAMBLE
 #newcommand
 
-
 # Personal Snippets
+snippet func \function with sections
+	\\DeclareDocumentCommand{${1:cmd}} {
+		\\section{${2:sec}}	
+		\\subsection{${3:sub}}
+		${0}
+	}
+	
+snippet func* \function with sections
+	\\DeclareDocumentCommand{${1:cmd}} {
+		\\section*{${2:sec}}	
+		\\subsection*{${3:sub}}
+		${0}
+	}
+
 snippet nc \newcommand
 	\\newcommand{\\${1:cmd}} {
 		${0}
 	}
+
 snippet ncf \newcommand
 	\\newcommand{\\${1:cmd}}[${2:opt}]{${3:realcmd}} ${0}
 
