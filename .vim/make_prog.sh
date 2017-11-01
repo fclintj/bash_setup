@@ -38,15 +38,24 @@ elif [[ $1 == *.cpp || $1 == *.c ]]; then
     make
 
 elif [[ $1 == *.py ]]; then
+    ctags -Rf .tags . 
     start=$(date +%s%3N)
     python $1 $output
 
 elif [[ $1 == *.pyx ]]; then
-    cython $1 
+    cython --embed $1
+    ctags -Rf .tags . 
     name=$1
-    gcc -Wall -O2 -g -lm -shared -pthread -fPIC -fwrapv -fno-strict-aliasing -I/usr/include/python3.5 -o ${name%.*}.so ${name%.*}.c
+    gcc -I /usr/include/python3.5m -o ${name%.*} ${name%.*}.c -lpython3.5m
     start=$(date +%s%3N)
-    python3 -c "import ${name%.*}; ${name%.*}.main()"
+    rm ${name%.*}.c 
+    ./${name%.*} $output 
+
+    # cython $1 
+    # name=$1
+    # gcc -Wall -O2 -g -lm -shared -pthread -fPIC -fwrapv -fno-strict-aliasing -I/usr/include/python3.5 -o ${name%.*}.so ${name%.*}.c
+    # start=$(date +%s%3N)
+    # python3 -c "import ${name%.*}; ${name%.*}.main()"
 
 elif [[ $1 == *.tex ]]; then
     if [[ ! -d build ]]; then

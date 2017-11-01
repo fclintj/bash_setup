@@ -1,0 +1,377 @@
+\title { Journal          }
+\author{ Clint Ferrin     }
+\date  { Mon Aug 14, 2017 }
+\documentclass{article}\makeatletter
+
+\newcommand{\main} {
+   % document setup
+   \pageSetup
+   \createTitlePage
+   \includeHeader
+   \createTableOfContents
+
+   % content
+   \introduction
+   % \january
+   % \march
+   \april
+   % \may
+   % \june
+   % \aug
+   \sep
+}
+
+%  ┌────────────────────────┐
+%  │     Extra Packages     │
+%  └────────────────────────┘
+    \usepackage[utf8]{inputenc}	% allows new character options
+    \usepackage[a5paper]{geometry}   % Paper dimensions and margins
+    \usepackage{fancyhdr}   % include document header
+    \usepackage{amsmath}    % allows equations to be split
+    \usepackage{enumitem}   % create lists
+    \usepackage{graphicx}	% manage images and graphics
+    \usepackage{hyperref}	% creates hyper-link color options
+    \usepackage{cleveref}	% (\Cref) include "Figure" on \reff 
+    \usepackage{xparse}     % include high performing functions 
+    \usepackage{xstring}    % StrSubstitute replace character
+    \usepackage{floatrow}	% allows placement of figures [H]
+    \usepackage{url}    	% package for url links
+    \usepackage{titletoc}   % change Table of Contents settings
+    \usepackage{graphicx, type1cm, lettrine} % capital first letter
+                     
+
+    %  ┌────────────────────────┐
+    %  │   General Functions    │
+    %  └────────────────────────┘
+    \DeclareDocumentCommand{\reff}{m} {
+        \edef\link{#1}
+        \hspace{-0.5em}\hyperref[\link]{\Cref*{\link}} \hspace{-0.65em}
+    }
+
+    \DeclareDocumentCommand{\newFigure}{m o o} {
+        \edef\path{#1} \edef\figcaption{#2} \edef\size{#3}  
+        % add label to figure
+        \StrSubstitute{#1}{.pdf}{}[\temp]
+        \StrSubstitute{\temp}{.jpg}{}[\temp]
+        \StrSubstitute{\temp}{.png}{}[\temp]
+        \expandafter\StrSubstitute\expandafter{\temp}{-}{ }[\temp]
+        %\label{\temp} % label gets rid of type and -.
+        % add size if not present
+        \IfNoValueTF{#3} { % if 2 and 3 are NULL
+            \def\size{0.75}
+            }{}
+
+            % add caption if not present
+        \IfNoValueTF{#2} { % if 2 and 3 are NULL
+            %\expandafter\StrSubstitute\expandafter{\temp}{-}{ }[\output]
+            \newcommand\helphere{\temp}
+            \StrBehind{\helphere}{/}[\figcaption]
+        }{}
+
+        \begin{figure}[H]
+            \begin{center}
+                \includegraphics[width=\size\textwidth]{\path}
+                % the following function will not receive []
+                % \capitalisewords{}
+                \caption{\figcaption}
+                \label{\temp} % label gets rid of type and -.
+            \end{center}
+        \end{figure} 
+    }
+
+    \DeclareDocumentCommand{\quote}{m} {
+        \parskip=0pt
+        \hspace{-0.65em}
+        \textit{\newline#1}
+        \parskip = \baselineskip
+    }
+
+    % \usepackage{GoudyIn}
+    \newcommand{\bigL}[2]{
+        \renewcommand{\LettrineTextFont}{\normalfont}
+        % \renewcommand{\LettrineFontHook}{\GoudyInfamily{}}
+        \LettrineTextFont{\itshape}
+        \lettrine[lraise=0, lines=3, findent=2pt, nindent=1pt]{#1}{\hspace{0.15em}#2}
+        % \message
+    }    
+    %  ┌────────────────────────┐
+    %  │   Content Functions    │
+    %  └────────────────────────┘
+    \DeclareDocumentCommand{\pageSetup}{} {
+
+        \let\Title \@title
+        \let\Date  \@date
+        \let\Author\@author
+
+        \renewcommand{\thesubsection}{\hspace{-1em}}
+        \renewcommand{\thesection}{\hspace{-1em}}
+        \renewcommand{\partname}{}
+        \renewcommand{\thepart}{}
+
+        \newgeometry{left=1in,bottom=1in,right=1in,top=1in} % page dims
+        \setlength\parindent{0pt}	% set no tab on new paragraphs
+        \parskip = \baselineskip	% set single skip after paragraphs
+        \setlist{nosep,after=\vspace{\baselineskip}} % remove space on list
+    }\hypersetup{				% hyper-links environment
+        colorlinks,
+            linkcolor	= {black},
+            citecolor	= {black},
+            urlcolor	= {black},
+            pdfborderstyle={/S/U/W 1}
+        }
+
+    \DeclareDocumentCommand{\createTitlePage}{} {
+        \clearpage
+        \begin{center}
+            \thispagestyle{empty}
+            \huge{\Title} 
+
+            % line
+            \vspace{0.25em}
+            \line(1,0){250}\normalsize 
+
+            \vspace{5mm}
+            Applying True Principles 
+
+            \vspace{2.5cm}
+            % \newFigure{media/title.png}[Filter Attributes][0.45]
+            \vspace{2.5cm}
+
+            \Author \vspace{-1em}
+
+            Ferrin Family Forever \vspace{-1em}
+
+            \Date           \vspace{-1em}
+
+            \pagenumbering{gobble} 
+            \newpage
+        \end{center}
+    }
+
+    \DeclareDocumentCommand{\createTableOfContents}{} {
+        \pagenumbering{roman}
+        \clearpage
+        \newdimen\punktik
+        \def\cvak{\ifdim\punktik<6pt \global\punktik=3pt \else\global\punktik=3pt \fi}
+        \def\tocdots{\cvak\leaders\hbox to10pt{\kern\punktik.\hss}\hfill}
+
+        \titlecontents{section}[0em]{\vskip -1em}{}{\itshape}{\hfill\thecontentspage}
+
+        \titlecontents{subsection}[1em]{\vskip -1em}{}{} {\tocdots\thecontentspage}
+
+        \tableofcontents 
+
+        \newpage
+    }
+
+    \DeclareDocumentCommand{\includeHeader}{} {
+        \pagestyle{fancy}
+        \fancyhf{}
+        % \fancyhead[L]{Top Left}
+        \fancyhead[L]{\Title}
+        \fancyhead[R]{\nouppercase\leftmark}
+        % \fancyhead[R]{Top Right}
+        \renewcommand{\headrulewidth}{0.5pt}
+        %\fancyfoot[L]{Bottom Left}
+        \fancyfoot[C]{\thepage}
+        %\fancyfoot[R]{Bottom Right}
+        \renewcommand{\footrulewidth}{0.5pt}
+    }
+
+    \DeclareDocumentCommand{\introduction}{} {
+        \pagenumbering{arabic}
+        \section{Introduction}
+        This is a test to see what happens when I continue to write without stopping. I find that it is difficult to know what to write about.
+    } 
+
+    \DeclareDocumentCommand{\january}{} {
+        \section{January}
+        \subsection{Sun Jan 22, 2017}
+        \bigL{D}{akota} told me she is pregnant! :D I do not usually use exclamation marks, but today I could use 1000. We have joked about her being pregnant for the past week because her period did not happen when we anticipated it, and she told me that she was not going to tell me right away. I laughed and said, “Yeah right. Not telling anyone would completely burn a hole in your tongue.”
+
+        Yesterday she went to the Cache Valley Center for Women and took a pregnancy test. The result was positive and everyone there congratulated her. I did not know that she went yesterday because previously she told me that the place she wanted to go was closed.
+
+        On Friday, we conducted the song for the MSA Date Night devotional and ate food there. While there, the Farleys (Alicia and Alex) invited us to go to the Utah Symphony’s performance at USU. I agreed quickly because I love professional orchestral music. I could tell Dakota did not want to go, but I had no idea why not. PS: during dinner I took too much soup and burned my hand because it overflowed, and the people we were sitting with laughed at me for eating five rolls.
+
+        At the concert hall, Dakota almost gave away the news when she said, “Clint, this semester we are going to have to be really effective. It is really important.” I said, “Wait, are you saying that you are pregnant?” --half kidding.
+        She quickly recovered and said, “Maybe… but remember, the place I wanted to go was closed today and I didn’t have much time.”
+        I figured she was just telling me that another day had passed without having a period. The play continued, and Dakota was ready to go by the intermission. We probably should have just gone because she didn’t enjoy the last half; the hole had almost burned through her hole tongue. 
+
+        Before we went to the play, we had originally planned to go to the Logan Lookout where we spent a lot of time while we were dating. Instead we listened to the Utah Symphony and bought an Oreo shake and an ice cream. By that time it was about 10:10 pm and Dakota still wanted to go to the lookout. I said we would go, but that I was exhausted. We pulled up and she promptly said, “Clint, I really have to go to the bathroom.” I said, “But I am talking to Dakota Camel! I have seen you hold it for an entire day. We don’t have time to go home and all the way back here. It would be 10:45 by then.”
+
+        She looked at me and said, “Clint, please. I really want to come back.” I protested for about 10 seconds but realized that she really want to come back. After returning, she asked me to go to the amphitheater with her. It was cold and snowy, but the amphitheater was empty and there were hardly footprints. We danced together, and Dakota kept talking to me while we danced, and then she said something like, “Clint, I am so happy we have been able to dance the steps of life together. Just think how wonderful it will be to dance with another partner in September.” I stopped dancing and put my hand firmly on both shoulders and asked, “Are you telling me you are pregnant?” She shook her head and I picked her up high and started spinning her. I am so happy and I am excited to prepare ourselves for a baby. 
+
+
+        Yesterday we went to our first hockey game. It is fast paced and intense… Dakota even said that she liked it. Of course we found some empty seat at mid-arena and we sat in them. We should have known there was a reason they were empty. We sat in front of the loudest and meanest fan in the whole building. He yelled at the referees and the players, and was one of the reasons my right ear was ringing when we left the stadium. We left at the beginning of the third period, and we got there about an hour late, but we enjoyed what we saw--haha. After the game we laughed that one of my favorite parts was watching the Zamboni clean the ice. We are definitely not the traditional sports fans. 
+
+        We have a few books like, “What to Expect When You Are Expecting” and “A Child is Born” that we got from the Burt’s house. We snuck into their storage room together and picked our favorite ones because we haven’t decided when we are going to tell our parents. We read them while we were driving in our car and when we were getting ready for bed.
+
+        I am very excited to start our family. I admit that I am a little nervous about how it will affect school and my sleeping habits. We will have to make large financial sacrifices in the next year, but I know that God will help us. I remember Ezra Taft Benson’s quote, “Men and women who turn their lives over to God will discover that He can make a lot more out of their lives than they can.” Dakota and I felt like God wanted us to have children now, and we will be able to find a way to be successful because we are on the Lord’s side.
+
+    }
+    \DeclareDocumentCommand{\march}{} {
+        \section{March} 
+        \subsection{Sun Mar 11, 2017}
+        \bigL{Y}{esterday}we visited Jacob’s home at Hill Field Road. He had his first baby, Jaxon, last week and took work off so that he could love and care for his wife and family. Dakota and I congratulated him, held the baby, talked, and spent the evening with them. Towards the end of the evening, I went with Lance and Jacob to Lowe's (Jacob accidentally burst a pipe), Walgreen's (to pick up medicine), and Red box (to drop off a rented movie). When we got home, we wanted to do something relaxing, and video games sounded fun. Dakota told me to stand up for myself and tell them I did not want to play a violent video game. Jacob and Lance wanted to show me the new Modern Warfare, and I was hesitant to tell her I would. In fact, I wanted to play the new video game that Lance and Jacob wanted to show me.
+
+        I have always been good at video games. In High School I remember having Halo parties where I won consecutively, and I have had several good memories of playing similar games with my brothers. If we were playing teams, people always want me on their team. I was hesitant to say that I am never going to play violent video games, because I eliminate most popular games, and most video game activities. I do not play video games by myself (I think they are a poor use of time), especially shooter video games--I have enjoyed the acceptance that comes along with video games, and the comradery. 
+
+        In the end, I suggested that we play Super Smash Brothers instead of Modern Warfare. Dakota did not want to play, and she said she would prefer to color in Moe’s coloring book for grown-ups. We ended around 9:30 pm, and on our way home Dakota brought up the incident. Again, she suggested that I give up violent video games completely. I was still hesitant, but I promised her I would think about it. I was going to simply commit to avoid violent video games last night, but I thought it would be a disservice to both Dakota and me. I knew it would be beneficial to write down why I wanted to make the decision.
+
+        I will not play violent video games for the following reasons:
+        Violence and murder is abhorred by God, and it is sin. According to Brad Bushman, a professor of communication and psychology at Ohio State University, “Sex outside of marriage is a serious sin. In fact, Alma taught that it was among the most grievous of sins. But what did Alma rank as the two most serious sins? Denying the Holy Ghost and “shedding … innocent blood,” or committing murder (see Alma 39:5–6). I was puzzled that many Church members did not feel concerned about watching people being murdered on the screen. And many seemed to consider profanity to be more objectionable than violence in movies and TV programs.” It is clear that God reserves the right to determine when a person enters and exits this world
+
+        Any benefit that violent games offer is outweighed by the negative effects of the violence--especially because the benefits can be found somewhere else. Good, Better, Best. It is better to fill your mind with goodness
+
+        Declining to participate in violent video games is an opportunity to let Christ’s light shine.
+
+        The Lord does not need a society that hides and isolates itself from the world. Rather, he needs stalwart individuals and families who live exemplary lives in the world and demonstrate that joy and fulfillment come not of the world but through the spirit and the doctrine of Jesus Christ (M. Russel Ballard)
+
+        % poem
+        \quote{
+            All the water in the world\\
+        No matter how it tried\\
+        Could never sink the smallest ship\\
+        Unless it got inside.\\
+        All the evil of the world\\
+        And every kind of sin\\
+        Could never damn a human soul\\
+        Unless we let it in.\\
+    }
+        ---Unknown Author
+
+        This commitment puts me in a strange position, because I am planning on working at Hill Air Force Base as a flight simulator programmer. As part of my job, I need to develop and test the weapon tactics simulation programs,and these programs include violent gaming aspects. 
+        What is the difference? Is it OK if I pursue this direction?
+        The flight simulator is a training environment developed for people who will be in paralleled real-life situations, and the market is not youth and civilians. The simulator is intended to represent reality, and is not intended to glorify violence and gore. The intent is to train military personnel so that they can protect people, and not to pollute the minds of youth and adults with violence.
+
+        \subsection{Sun Mar 26, 2017}
+        \bigL{M}{om} and Dad are visiting from Hawaii so that they can see Jaxon, Jacob, and Moe. They have been here for almost a week, and Mom was sick when she came. She came with the purpose of taking care of Jacob and Moe, and loving Jaxon, but she still suggested that she stay with Grandma instead of risking that the baby get sick. Of course, everyone told her that she was needed at Jacob and Moe’s house, and Jaxon got his first sickness. He has been miserable… but not quite as miserable as mom. She feels really sad/bad about the sickness, and we had to remind her that she was where she needed to be. Her coming to Utah is a big blessing to everyone.
+
+        Yesterday our plan was to wake up at Grandma’s house, go to Jacob’s house until about 2:00, go to Grandpa Webb’s 80th birthday party, and then come home. At the end of the time that we were with  Jacob, we started playing Munchkin--no one had played it except Dakota, and we all loved it! We didn’t have time to finish, so Jacob suggested that we stop by his house on our way home. Dakota excitedly accepted, and we went to Grandpa’s 80th birthday party. On the way home, we stopped at Jacob’s house, and Lance and Jacob were playing video games--modern warfare. Those type of games really make Dakota uncomfortable, and they should probably make me uncomfortable as well.
+
+        We have never really considered what to do when other people play violent video games. Dakota got up to leave and I excused myself for a drink of water. I think that is appropriate for people you do not know, but for people that you do know, it is best to just tell them what you do not like.
+
+        Also, Dakota is almost 14 weeks along in her pregnancy and I am very excited… especially when I found out that our baby is about the size of a lemon now. When we saw the ultrasound, the baby was wiggling around and moving its arms like it was dancing. Of every major eternal step I have taken in life (i.e., marriage, mission… etc), this is the one I have felt least prepared for. I do not know how it will affect us financially, emotionally, spiritually, and I have no idea the time that goes into raising a baby.
+
+        I am excited to be a father, and I have looked forward to the stewardship as long as I can remember. If God gives us a little girl, I will love her with all my heart, and give her my attention and affection. If God blesses us with a boy, I will strive to make him a man of the priesthood, integrity, and strength. 
+
+        When I talked to Jacob after Jaxon was born, he tried to explain to me how the birth of his first child changed his goals and thoughts. He loves deeper, and his highest priorities are more noble. They center on the family and providing for them. He said that he has a deeper capacity to love everyone.
+    }
+
+    \DeclareDocumentCommand{\april}{} {
+        \section{April}
+        \subsection{Wed Apr 19, 2017}
+        \bigL{Y}{esterday,} I was driving in the car and this is came to my mind, and I felt inspired about how I should look at people that are seen as, “less-smart” by others. The thought came because of comments that I have heard from people saying that employees from Hill AFB are working with the government because they could not get a job with a private corporation.
+
+        ``Stop thinking you're better than them. Sure, if they were given your same parents and experiences as you, they might have turned out more like you. Trust that they have done the best with the talent, intelligence, and teaching they have been given. Even if you excelled--regardless of ideal circumstances--at the very least, there was someone or something that inspired you. You should be the one to inspire them, not degrade them (both to their face and when they are away)."
+    }
+    \DeclareDocumentCommand{\may}{} {
+        \section{May}
+        \subsection{Fri May 6, 2017}
+        \bigL{D}{akota} graduated from her Master’s program today (with the exception of her thesis that she will be finishing over the summer). I am proud of her because she has done an excellent job at being proactive this year, and she has  started her projects with much more time than she has in the past years of her schooling. :)
+
+        \subsection{Thu May 18, 2017}
+        \bigL{I}{} am not sure what to write about right now. I have an incredible assortment of emotions and it is not all because of my location and situation. I am in a teacher's suite now in a city near Lanzhou, China. Dakota is in classes Yu Zhong Chinese students both helping the teachers teach and interacting with the students. I have a list of things I want to do and I feel like I should delay their completion so that I can reflect on my life. I want to establish a life that I feel proud of and that is aligned with God's will for me.
+
+        I have been married for about 1.5 years and do not feel like I have helped Dakota with her OCD. I feel like she is more dependent on me than ever before, and I feel as though I am much less sensitive than I was before we were married. I want to feel the spirit more, and I do not feel like I have been living up to my potential in the priesthood. Though I have seen a lot of success in school, I have a foreboding feeling that the things I have been learning are not been the most important for me in my life. I have enjoyed everything I have learned about programming and electrical engineering, but my spirit feels hungry. I suspect that the major reasons are that I have not maintained a sacred time to read the scriptures alone and ponder. I do not read books anymore, and my school projects leak into every other part of my life---including the sacrament. One indication that my priorities have been sliding out of balance is that while I was taking the sacrament, my thoughts kept locking on ideas for my whiteboard project. I could not even focus my attention to Christ for the 15 minutes during sacrament meeting.
+
+        Even while I have been writing this entry (in Latex) I have been distracted countless times to look up keyboard shortcuts for Vim, and ways to optimize my efficiency. I am sure that it is a distraction for the spirit and I am sure that it borders unhealthy. The only thing I have committed to do while at the Chinese School is give a one-hour lecture on how to learn English and how USU Engineering differs from Engineering in China. That should give me time to start the process of redirecting my path towards Christ.
+
+        I am not even sure what the purpose of this journal entry, but I do not really like how the tone of the entry is somewhat negative because I do feel motivated to make changes in my life. I am going to stop now and write more after I have had time to ponder and think about life.
+
+        \subsection{Fri May 19, 2017}
+        \bigL{D}akota gave a presentation today, and she built the PowerPoint. I was very proud that she took initiative and asked everyone for pictures that they wanted in the slideshow. Up until that point, everyone was talking about how they were planning on just having an informal conversation instead of a presentation, but Dakota wanted to put on a good show for everyone involved. She spent from 8:00 until 1:40 compiling and putting together the slideshow of \textit{Life in America}.
+
+        I am still distracted, but I started writing things down, and I made 5 goals that I want to remember. I put them on the desktop of my computer to help me remember them as I go through my different projects. 
+
+        % \includegraphics[width=0.50\line width]{journal-media/2017-goals.png}
+
+        I am going to stop and simply write on a piece of paper so that I can organize my thoughts. I get too distracted while I am at the computer. I find ways that I can make my writing in Vim faster and I am distracted too easily. I need something to write about before I start to write or I tend to write trivial things.
+    }
+
+    \DeclareDocumentCommand{\june}{} {
+        \section{June}
+        \subsection{June 02, 2017}
+        Yesterday Dakota and I went to the temple with Linda because she gave us names that Whitten sent her from his mission in Honduras. I gave Dakota a blessing in preparation to go that morning to help her feel calm. Her OCD has made her more and more worried, especially because she does not have a strict schedule to go by right now. During the temple endowment, I kept thinking about my position in Tau Beta Pi.
+
+        In February, I went to the election ceremony and everyone running for the President position was either late or out of town. Jonathan Tousley and his friend suggested several times that I should run for the position, and they kept prodding me. I felt uncomfortable about the organization at the time because the initiation ceremony made me feel uncomfortable the first time I went. The ceremony commemorates the founders of the Honor's program by having the initiates promise to live worthy lives—but the ceremony is held in a dimly lit room with scripted parts. The principles are all uplifting, but it also made me uncomfortable that the word \textit{covenant}  was used. 
+
+        I think that was the main reason that I felt some reluctance for the elections meeting. However, because the current president, Austin Costely, and the rest of the council includes people that I look up to and respect, I felt like joining TBP was something good to be a part of. I ended up running for the position in a split-second decision, and I was selected as president.
+
+        I have been considering stepping down for the position for a while now because I did not feel good about running for the position in the beginning. I am trying to follow the spirit, and the words from general conference, ``we must act on the first prompting" by Elder Rasband have been echoing in my mind for the past two months. I feel like I should act on promptings with courage, and I wish I had enough strength of character to identify and act on spiritual promptings immediately. 
+
+        The thought came back up to my mind while I was in the temple with Linda and Dakota. Adam is given the next ordnance of salvation only after he obeys the Lord and gives Sacrifice. When an angle asks, "Why are you offering Sacrifices?" Adam responds that he does not know, "Except the Lord commanded me." If I also want to receive more revelation in my life, or the next steps for my personal salvation, I must act on the inspiration that the Lord has already given me.
+
+        6 hours later I had a meeting planned to determine the objectives and vision with next years TBP presidency: Ben Russen, Chritian Bolander, and Darcie Christensen. While there, I felt wonderful and a deep desire to spend time with and build relationships with the people there—they really are some of the best people I know.
+
+        I had intended to write this journal entry to explain how I came to the conclusion of stepping down from the president position, but now I feel confused because I just wrote about how positive my experience was with them. I am confused, but I know that if I trust in God, He will be able to make more out of me than I could ever make out of myself. Perhaps I need to learn something through this experience by not joining. I pray that I can make the right decision.
+
+        \subsection{June 03, 2017}
+        \bigL{Y}{esterday} Dakota and I had a wonderful date at our Amphitheater. After the ward party we played, ``Ticket to Ride" at the amphitheater. I also slept on the thought about what I am going to do about TBP. The thought came to me this morning, ``What is the best choice from an eternal perspective?" I imagine that joining TBP will be like all the other clubs that I was a part of; I will love the people that are there as function friends, 
+
+        \subsection{June 10, 2017}
+        \bigL{T}{oday} is my first Saturday since working at Hill AFB. I still do not have my CAC card, so I have been working on my own learning objective projects while there, and I have learned a lot. Even so, with the amount of time that I work there and the drive included, I feel like I have limited time to mold myself. When I get home, Dakota is so excited to see me because she has been bored all day, that she wants to spend all her time with me. I love that she loves to see me, but I need to remember to read the scriptures and make time for myself to have self-reflection and time to ponder.
+
+        I had a time to sit and think. I turned off the computer and I let the spirit work in my heart. The spirit told me that I need to be good before God by finding a time of the day that I can read the scripture; a time away from the distractions of the computers. I can use the computer as an enhancer to record what I have been taught or what I have felt, but I should never use it during my first source of inspiration―it is too much of a distraction in my life right now. 
+
+        I need to be grateful in my life right now. To do so, I should look for ways that the Lord's hand is in my life. I want to find his influence and look for His powers manifest in my life. 
+
+        I saw the Lord's hand in my life as we weeded the garden. I only ever used to weed when I was very young―less than 9 years old. I have never appreciated the parallels that can be drawn to life. In our young garden, the weeds popped out of the freshly turned soil much faster than the plants. As a result, last week we could not tell what was a weed and what was not. It is the lesson of the wheat and the tares. God must let them grow together until he removes the weeds to see what they will become. I am in a nascent stage of life, and the time and stresses are tests to see if I will become a generously giving plant instead of a demanding and suffocating weed.  
+
+        My wife is incredible. Today we spent our entire morning working together. From 7:45 am until 1:30 pm we were crouching in the garden, cleaning our room, sanitizing the bathrooms, and folding laundry. We laughed and smiled the entire time. I am grateful to have a wife that works hard and has a playful attitude. I want to learn to love her with my whole heart. 
+    }
+
+    \DeclareDocumentCommand{\aug}{} {
+        \section{August} 
+        % \subsection{Mon Aug 14, 2017}
+        % I decided to continue with Tau Beta Pi and I think I feel good about the decision---one reason is because I want to fulfill commitments that I take on.
+
+        \subsection{Sun Aug 20, 2017}
+        \bigL{L}{ast} night Dakota and I finished our pre-baby trip to Salt Lake and Bear Lake. We went to Minnetonka cave in Idaho, and Dakota did not even wear a jacket. Since becoming pregnant, she always talks about how hot it always is. When we decided to go to the cave, she said, ``I am not even going to wear a jacket. I can't tell you how nice it will feel to be 40 degrees!" She did not end up wearing a jacket the entire time, and I could not believe it. 
+
+        For an idea of how hot her temperature runs compared to mine, we took a picture using a infrared camera at Clark Planetarium. 
+
+        \newFigure{media/clark-planetarium.jpg}[Clark Planetarium]
+
+        She looks red hot, and I am a normal temperature.  
+
+        \subsection{Sat Aug 26, 2017}
+        \bigL{T}{his} week has been an adventure. Apart from the incredible events we have been a part of, I made important decisions as well. After prayer and conversations with Dakota, we both felt like it was best for me to step down from my position as President of Tau Beta Pi. I have tossed my decision back and forth for some time now, and I feel that it has taken me so long to come to a conclusion. Usually I came down to two ideas. First, I felt like TBP was demanding too much from my time, but I felt a deep desire to continue because I wanted to fulfill my commitment to the organization---and especially to the people that are in the Presidency. 
+
+        Second, I felt like I needed to spend time with my wife and my newborn child. I know that this semester is going to one of the hardest yet for me with my classes, and the presidency position in E-Council. I also remember that the first time I signed up for the President's position, I did not feel good about running for the position. I concluded that The Lord would have been happy to support me in the position, but that I might miss out on wonderful opportunities that He has in store for me right now.
+
+        After telling the presidency that I was stepping down from the position, I spent the rest of the week trying to fulfill the last commitments that I made to the group. Trying to keep a correspondence among the excitement of life proved harder than it sounds though.
+
+        On Sunday we went into the hospital because Dakota became very swollen, and we wanted to be sure she was fine. They told us that even though she was only about 35 weeks along, she was 80\% effaced, and a 1+! On Monday we went boating with the ward. I was pulled around the Hyrum Reservoir on a 3-man tube at alarming speeds and dumped twice; Dakota loves being pulled along in a boat, so she asked to jump in the tube---even though she had on street clothes and no swimming suit... Oh, and even though she is 8 months pregnant. The driver told her that she could ride, but that he would go very slow. By then, I was seasick, and I decided it was best to ride with her on the tube if she was planning on going. We were a funny sight because I was ready to throw up, and she was ready to pop out a baby.
+
+        On Wednesday Dakota and I spent most of the day at the, ``Taste of Logan" event that is put on for the incoming Freshmen and transfer students. We went to every booth, and did not even want dinner because we were so full.
+
+        Thursday was our day full of Doctor's appointments and meetings.
+
+        Friday Dakota and I went out to eat at the Firehouse Pizza, and we ended up finding the TV show, ``Story Trek." We think it is a really fun concept. It fetters a retired reporter who goes around the country and interviews people about their story. Everyone has a story, and it is fun to hear what a person says about themselves in only 30 minutes. It is a spiritual process to try and tell someone the few most important stories of your entire life, and it makes me wonder what I would say, and what I would want to say if I were interviewed.
+
+        Today we spent the day with Jacob and Moe because Moe planned a baby shower for Dakota. I weeded the front yard with Jacob because he is trying to get rid of a bunch of Morning Glory that is attacking the rock-beds in his front yard. He told me about his scuba diving adventures in Hawaii, and about his views on life. I found out that Lance decided to visit Mom and Dad for about 10 days to make some money and help them out. The real reason that he went, is because he wanted to build/repair his relationship with Mom and Dad.
+
+        While he was there, I guess Dad spotted Lance's new tattoo on his wrist and he told Lance how bad his decision was. Lance lost it, and he is ready to come home now, and I think he might feel a distance between Mom and Dad.
+
+        My aunts and cousins were so generous to Dakota and me. We received blankets, clothes, bathroom essentials (including a baby tub), a swing, and more. It still makes me fell a sense of wonder that so many people gather in once place to help Dakota and me start our family. I feel grateful and more generous myself.
+        
+        \vspace{-2em}\begin{center}\noindent\rule{4cm}{0.4pt}\end{center}
+
+    }
+    
+    
+    \DeclareDocumentCommand{\sep}{} {
+        \section{September} 
+        \subsection{Sun Sep 24, 2017}
+            \bigL{K}{ali}Jo Ferrin was born on September 6th at 10:43 pm, weighing 7 pounds and 4 ounces, and measuring a length of 18 inches. Dakota and I were joking for months that Kali was going to come on the busiest school time possible--or she was going to wait until I was taking a test to decide to come. To our surprise, Kali came at perhaps the most convenient time possible for me. I have since recovered all of the homework time that I needed to while we were in the hospital, and I do not feel behind in school. Dakota wrote the last section on her thesis the day her water broke, and now only has her conclusion to write--what a blessing. :)
+
+            Writing her thesis has been one the hardest things she has ever done. It has been hard for me too, because it is so draining on her, and I have been trying everything I can to help her out. Surprisingly, Kali has also been good for Dakota in her productiveness in the day and her OCD. Dakota decided to breast feed, and she has Kali close to her every day. Normal things that used to worry Dakota are getting a little better now that Kali is in our family.
+
+            Having Kali in our family is changing my perspectives. It hasn't been happening in a flash of emotion like Jacob and Dad talked about when they had children, but it is real too. I want to make a loving home with high expectations, and good rules. I want to learn to manage myself better because I have a person I am entrusted to teach and nurture. We change her diapers repeated, and we move our schedules around to feed her and make sure she is happy,
+
+        
+    }
+\begin{document}
+    \main
+\end{document}

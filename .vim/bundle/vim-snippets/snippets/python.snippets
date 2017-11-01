@@ -1,11 +1,19 @@
 snippet #!
 	#!/usr/bin/env python
 	# -*- coding: utf-8 -*-
+
 snippet #!3
 	#!/usr/bin/env python3
 	# -*- coding: utf-8 -*-
 
+snippet sl
+	time.sleep(2)
+
 snippet main 
+	import sys
+	import numpy as np
+	import matplotlib.pyplot as plt
+
 	def main():
 		${0}
 	if __name__ == '__main__':
@@ -83,6 +91,12 @@ snippet ei
 	elif ${1:condition}:
 		${0:${VISUAL}}
 # For
+snippet for2
+	for i in ${1:items}:
+		for j in ${2:items}:
+		{2:items}:
+			${0}
+
 snippet for
 	for ${1:item} in ${2:items}:
 		${0}

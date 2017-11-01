@@ -162,6 +162,20 @@ snippet cca
 	const_cast<${1:unsigned}>(${2:expr})${3}
 ## Iteration
 # for i
+
+snippet forc
+	for (std::string::size_type ${2:i} = 0; $2 < ${1:count}; $2${3:++}) {
+		${4}
+	}
+
+snippet for2
+	for (int i = 0; i < ${1}; i++) {
+		for (int j = 0; j < ${2}; j++){
+			${3}	
+		}
+	}
+
+
 snippet fori
 	for (int ${2:i} = 0; $2 < ${1:count}; $2${3:++}) {
 		${4}

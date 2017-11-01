@@ -39,15 +39,20 @@ main()
 
     elif [[ $1 == *.py ]]; then
         start=$(date +%s%3N)
-        python $1 $output
+        ctags -Rf .tags . 
+        python3 $1 $output
 
     elif [[ $1 == *.pyx ]]; then
-        cython --embed $1
-        name=$1
-        gcc -I /usr/include/python3.5m -o ${name%.*} ${name%.*}.c -lpython3.5m
         start=$(date +%s%3N)
-        rm ${name%.*}.c 
-        ./${name%.*} $output 
+        ctags -Rf .tags . 
+        tmux send-keys -t 2 "%run $name" C-m
+
+        # cython --embed $1
+        # name=$1
+        # gcc -I /usr/include/python3.5m -o ${name%.*} ${name%.*}.c -lpython3.5m
+        # start=$(date +%s%3N)
+        # rm ${name%.*}.c 
+        # ./${name%.*} $output 
 
     elif [[ $1 == *.tex ]]; then
         name=$1
@@ -67,6 +72,7 @@ main()
         exit 0
     fi
     
+    echo
     echo
 
     # report run-time
@@ -95,5 +101,6 @@ function return_time() {
     echo $seconds*0.001|bc
     echo -e "\bs"
 }
+
 
 main "$@"

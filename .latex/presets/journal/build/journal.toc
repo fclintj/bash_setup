@@ -1,0 +1,10 @@
+\ttl@change@i {\@ne }{section}{0em}{\vskip -1em}{}{\itshape }{\hfill \thecontentspage }\relax 
+\ttl@change@v {section}{}{}{}\relax 
+\ttl@change@i {\@ne }{subsection}{1em}{\vskip -1em}{}{}{\tocdots \thecontentspage }\relax 
+\ttl@change@v {subsection}{}{}{}\relax 
+\contentsline {section}{\numberline {\hspace {-1em}}Introduction}{1}{section.1}
+\contentsline {section}{\numberline {\hspace {-1em}}April}{1}{section.2}
+\contentsline {subsection}{\numberline {\hspace {-1em}}Wed Apr 19, 2017}{1}{subsection.2.1}
+\contentsline {section}{\numberline {\hspace {-1em}}September}{2}{section.3}
+\contentsline {subsection}{\numberline {\hspace {-1em}}Sun Sep 24, 2017}{2}{subsection.3.1}
+\contentsfinish 

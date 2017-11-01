@@ -3,13 +3,38 @@
 #newcommand
 
 # Personal Snippets
-snippet func \function with sections
-	\\DeclareDocumentCommand{${1:cmd}} {
-		\\section{${2:sec}}	
-		\\subsection{${3:sub}}
+snippet entry 
+	\\section{${1}}	
+	\bigL{${2}}{${3}}
+	${0}
+
+snippet " \U+201C and U+201D
+	“${0}”
+
+snippet marg
+	\\margin{
 		${0}
 	}
-	
+
+snippet te
+	\\texttt{${0}}
+
+snippet month \function with sections
+	\\DeclareDocumentCommand{${1:cmd}} {
+		\\section{${2:sec}}	
+		${0}
+	}
+
+snippet lst \listing
+	\\lstinputlisting[language=Python,firstline=100,lastline=150,]{../python/3_linear.py}
+
+snippet lstpy
+	\lstpy{../python/}{Caption Description }{lst:}[0][10]
+
+
+snippet cpplisting
+	\\cpplisting{../source/}{}{code:}[10][12]
+
 snippet func* \function with sections
 	\\DeclareDocumentCommand{${1:cmd}} {
 		\\section*{${2:sec}}	
@@ -56,15 +81,15 @@ snippet center center environment
 	\\end{center}
 # Align(ed)
 snippet ali align(ed) environment
-	\\begin{align${1:ed}}
-		\\label{eq:${2}}
-		${0:${VISUAL}}
-	\\end{align$1}
+	\\begin{equation*}\\begin{aligned}
+		${0}
+	\\end{aligned}\\end{equation*}
 # Gather(ed)
 snippet gat gather(ed) environment
-	\\begin{gather${1:ed}}
-		${0:${VISUAL}}
-	\\end{gather$1}
+	\\begin{gather*}
+		${0}\\\\
+	\\end{gather}
+	}
 # Equation
 snippet eq equation environment
 	\\begin{equation}
@@ -162,8 +187,7 @@ snippet sec* \section*
 	${0}
 # Sub Section
 snippet sub \subsection
-	\\subsection{${1:subsection name}}
-	\\label{sub:${2:$1}}
+	\\subsection{${1}}
 	${0}
 # Sub Section without number
 snippet sub* \subsection*
@@ -200,8 +224,6 @@ snippet figure reference to a figure
 	${1:Figure}~\\ref{${2:fig:}}
 snippet table reference to a table
 	${1:Table}~\\ref{${2:tab:}}
-snippet listing reference to a listing
-	${1:Listing}~\\ref{${2:list}}
 snippet section reference to a section
 	${1:Section}~\\ref{sec:${2}} ${0}
 snippet page reference to a page
@@ -228,7 +250,7 @@ snippet fcite \footcite[]{}
 snippet ita italic text
 	\\textit{${1:${VISUAL:text}}} ${0}
 snippet bf bold face text
-	\\textbf{${1:${VISUAL:text}}} ${0}
+	\\textbf{${1}}
 snippet under underline text
 	\\underline{${1:${VISUAL:text}}} ${0}
 snippet emp emphasize text
@@ -252,15 +274,17 @@ snippet ms mathscr
 #misc
 snippet ft \footnote
 	\\footnote{${1:${VISUAL:text}}} ${0}
+
 snippet fig figure environment (includegraphics)
-	\\begin{figure}
-	\\begin{center}
-		\\includegraphics[scale=${1}]{Figures/${2}}
-	\\end{center}
-	\\caption{${3}}
-	\\label{fig:${4}}
-	\\end{figure}
-	${0}
+	\\newFigure{./media}{}{.6}{fig:}
+
+snippet fig2 figure environment (includegraphics)
+	\\newFigureTwo
+	{./media/}{}{.6}
+	{./media/}{}{.6}
+	{}{fig:sobel}
+	
+
 snippet tikz figure environment (tikzpicture)
 	\\begin{figure}[htpb]
 	\\begin{center}
@@ -345,7 +369,7 @@ snippet lr[ left[ right]
 snippet lra langle rangle
 	\\langle ${0} \\rangle
 # Code listings
-snippet lst
+snippet code 
 	\\begin{listing}[language=${1:language}]
 		${0:${VISUAL}}
 	\\end{listing}

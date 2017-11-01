@@ -7,3 +7,5 @@ vnoremap j gj
 vnoremap k gk
 
 syntax spell toplevel
+" color vylight
+" highlight Normal ctermfg=black ctermbg=white

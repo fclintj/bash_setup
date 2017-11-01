@@ -127,10 +127,6 @@
     fi
 
 # ┌────────────────────────┐
-# │   Directory aliasing   │
-# └────────────────────────┘
-
-# ┌────────────────────────┐
 # │  Formatting Functions  │
 # └────────────────────────┘
 function print_title() {
@@ -250,13 +246,37 @@ function date_tag() {
 }
 
 function mkcd() {
-    mkdir $1
-    cd $1
+    mkdir "$1"
+    cd "$1"
 }
+
 function cdl() {
     cd $1 
     ls
 }
+
+function vimjournal() {
+    cd '/mnt/CE6C52926C527565/Users/clint/Google\ Drive/Journaling/vim_journal'
+    vim ./journal.tex
+}
+
+function tmux_kill() {
+    list="$(tmux ls | awk '{print $1}' | sed 's/://g')"
+    re='^[0-9]+$' 
+
+    for i in $list; do
+        if [[ $i =~ $re ]] ; then
+            tmux kill-session -t $i 
+        fi 
+    done
+}
+
+function readpdf() {
+    convert -density 300 $1 -depth 8 -strip -background white -alpha off file.tiff
+    tesseract file.tiff $1
+    rm file.tiff
+}
+
 # ┌────────────────────────┐
 # │     color settings     │
 # └────────────────────────┘
@@ -272,7 +292,7 @@ function cdl() {
 set -o vi
 
 case $- in *i*)
-        [ -z "$TMUX" ] && exec tmux
+        [ -z "$TMUX" ] && exec tmux # attach -t master 
 esac
 
 # pipe output from terminal into clipboard
@@ -294,5 +314,9 @@ alias lslarge='find -type f -exec ls -s {} \; | sort -n -r | head -5 | pv'
 alias drive='cd /mnt/CE6C52926C527565/Users/clint/Google\ Drive/'
 alias wiki='vim /mnt/CE6C52926C527565/Users/clint/Google\ Drive/dev/vimwiki/index.wiki'
 alias cdwiki='vim /mnt/CE6C52926C527565/Users/clint/Google\ Drive/dev/vimwiki/index.wiki'
-alias cdjournal="cd /mnt/CE6C52926C527565/Users/clint/Google\ Drive/Journaling/vim_journal"
+alias cdjournal='cd /mnt/CE6C52926C527565/Users/clint/Google\ Drive/Journaling/vim_journal'
+alias cdneural='cd /mnt/CE6C52926C527565/Users/clint/Google\ Drive/School/Classes/Neural\ Networks/dev'
 # alias python='python3'
+alias cdgospel='cd /mnt/CE6C52926C527565/Users/clint/Google\ Drive/Gospel/Calling/Gospel\ Principles'
+alias cdsnippets='cd ~/.vim/bundle/vim-snippets/snippets'
+alias d='nemo . &'

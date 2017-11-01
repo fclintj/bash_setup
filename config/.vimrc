@@ -2,10 +2,13 @@
 "" │    vimrc setup    │
 "" └───────────────────┘
 
+    set encoding=utf-8 " set encoding displayed 
     set nu             " set numbers
     set wrapmargin=0   " set width of number margins
     set tabstop=4      " set characters in tab
+    set softtabstop=4  " num spaces for tab 
     set shiftwidth=4   " num of spaces for indentation
+    set smartindent    " reacts to the syntax/style of file
     set expandtab      " insert spaces instead of tab
     set linebreak      " wrap full words to next line
     set breakindent    " indent wrapped line
@@ -14,14 +17,13 @@
     set undofile       " maintain undo history between sessions
     set undodir=~/.vim/undodir 
     set foldmethod=indent " set nocompatible
-    set display+=lastline " show as much as possible of last line 
     set ignorecase     " will search case insensitive if all lowercase 
     set smartcase      " if string includes Cap then sensitive 
                        " /copyright\C " Case sensitive 
-    set nocompatible
     set display+=lastline " show as much as possible of last line 
-    "":set mouse=a
-
+    set nocompatible
+    set clipboard=unnamed    
+    
 "" ┌───────────────────┐
 "" │    theme setup    │
 "" └───────────────────┘
@@ -39,7 +41,7 @@
     "" ctrl+j auto-correct next word, ctrl+k previous word
     noremap <C-K> <Esc>[s1z=
     noremap <C-J> <Esc>]s1z=
-    "" "zg" adds word "zw" removes word from dictionary. "z+" gives word options 
+    "" "zg" adds word "zw" removes word from dictionary. "z=" gives word options 
     inoremap <C-K> <Esc>[s1z=
     inoremap <C-J> <Esc>]s1z=
 
@@ -67,9 +69,11 @@
     let g:languagetool_lang='en'
     let g:languagetool_disable_rules='COMMA_PARENTHESIS_WHITESPACE,WHITESPACE_RULE,EN_QUOTES'
     let g:ycm_python_binary_path = 'python'
-    " map <C-b> :NERDTreeToggle <CR>
-    
 
+    " " copy text from vim to other tmux pane
+    nnoremap <C-c><C-c> :SlimuxREPLSendLine<CR>
+    vnoremap <C-c><C-c> :SlimuxREPLSendSelection<CR>
+    nnoremap <C-c><C-v> :SlimuxREPLConfigure<CR>    
     
 "" ┌────────────────────┐
 "" │ search/replace all │
@@ -90,7 +94,7 @@
     inoremap <F3> <ESC> :w<CR> :make<CR> <CR> 
 
     "" debug c program with CounqueGDB
-    noremap <F5> :w<CR> :make<CR> :ConqueGdb  "%<"<CR> 
+    noremap <F5> :w<CR> :!clear;bash ~/.vim/make_prog.sh %<CR> :ConqueGdb  "../build/%<"<CR> 
     let g:ConqueTerm_StartMessages = 0
     let g:ConqueTerm_Color = 0
     let g:ConqueTerm_CloseOnEnd = 1
