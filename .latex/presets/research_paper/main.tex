@@ -1,32 +1,27 @@
-\title { Perceptron       }
+\title { Title             }
 \author{ Clint Ferrin     }
-\date  { Fri Sep 28, 2017 }
-\def\class { Neural Networks: ECE 5930 }
-\documentclass{article}\makeatletter
+\date  { Tue Oct 31, 2017 }
+\def\class{ Neural Networks: ECE 5930 }
+\documentclass{article}\makeatletter\usepackage{xparse}
 
-\newcommand{\main} {
-   % document setup
-   \pageSetup
-   \createTitlePage
-   \includeHeader
-   \createTableOfContents
+\DeclareDocumentCommand{\main}{} {
+    \pageSetup
+    \createTitlePage
+    \includeHeader
+    % \createTableOfContents
 
-   % content
    \section{Introduction}\label{sec:intro}
-        This is an introductory paragraph.
-        Feel free to add material
+   Insert “text” here.
 
-   \section{Pre Lab}\label{sec:pre-lab}
-        This is a test portion of the document to see if it will work in  \reff{_prelab}. I am not sure what I will be able to do all of the time.
+   \section{Conclusion}\label{sec:conclusion}
+        This is a conclusion paragraph. 
 }
 
 %  ┌────────────────────────┐
 %  │     Extra Packages     │
 %  └────────────────────────┘
-    % \usepackage{fontspec}   % allows Unicode in XeLaTex
-    % \setmainfont{FreeSerif} % introduction to fonts below 
-    % https://tex.stackexchange.com/questions/320096/xelatex-fontspec-cannot-find-fonts 
-    % \usepackage{ucharclasses} % allows Unicode in XeLaTex
+    \usepackage{fontspec}   % allows Unicode in XeLaTex
+    \usepackage{ucharclasses} % allows Unicode in XeLaTex
     \usepackage[utf8]{inputenc}	% allows new character options
     \usepackage[a4paper]{geometry}   % Paper dimensions and margins
     \usepackage{fancyhdr}   % include document header
@@ -36,7 +31,6 @@
     \usepackage{graphicx}	% manage images and graphics
     \usepackage{hyperref}	% creates hyper-link color options
     \usepackage{cleveref}	% (\Cref) include "Figure" on \reff 
-    \usepackage{xparse}     % include high performing functions 
     \usepackage{xstring}    % StrSubstitute replace character
     \usepackage{floatrow}	% allows placement of figures [H]
     \usepackage{url}    	% package for url links
@@ -44,13 +38,14 @@
     \usepackage{caption}    % removes figure from LoF: \caption[]{}
     \usepackage{listings, lstautogobble} % includes ability to input code
     \usepackage{color}      % include colors for 
-    \usepackage{courier}    % courier font for listings
     \usepackage{etoolbox}
     \usepackage{tabulary}	% columns size of their contents (on page)
     \usepackage{booktabs}   % allows for \toprule in tables
     \usepackage{subcaption} % add two plots together
     \usepackage[nomessages]{fp} % calculations in latex
-    \usepackage{tocloft}
+    \usepackage{tocloft}    % adjust the table of contents
+    \usepackage{scrextend}  % \begin{addmargin}[<left indent>]{<indent>}
+    \usepackage{pdfpages}   % include entire pdf documents
 
 
     \definecolor{mygreen}{RGB}{28,172,0}	% custom defined colors
@@ -79,12 +74,20 @@
         autogobble      = true
     }
 
+    \def\inline{\lstinline[
+        basicstyle=\ttfamily,
+        keywordstyle={},
+        morekeywords={},
+        emph={}
+    ]}
+
+
 %  ┌────────────────────────┐
 %  │      Common Tasks      │
 %  └────────────────────────┘
     \DeclareDocumentCommand{\commontasks}{m} {
         \href{https://drive.google.com/open?id=0B5NW7S3txe5UTE0xSHJHNWxJbEE}{\underline{this link}} 
-        \texttt{PYTHON}
+        \mono{PYTHON}
         \lstinputlisting[language=Python]{../python/3_linear.py}
 
         % two figures side by side
@@ -100,9 +103,21 @@
 %  ┌────────────────────────┐
 %  │   General Functions    │
 %  └────────────────────────┘
+    \DeclareDocumentCommand{\mono}{m} {
+        \sloppy
+        \lstinline{#1} 
+    }
+
     % function to create magnitude bars around a function
+    \newcommand\longvar[1]{\mathchardef\UrlBreakPenalty=100
+    \mathchardef\UrlBigBreakPenalty=100\url{#1}}
     \newcommand{\norm}[1]{\left\lVert#1\right\rVert}
 
+    \DeclareDocumentCommand{\margin}{m} {
+        \begin{addmargin}[4em]{0em}
+            #1 
+        \end{addmargin} 
+    }
     \DeclareDocumentCommand{\newFigureTwo}{m m m m m m m m} {
         % \FPeval{opposite}{1-#9}
         \begin{figure}[H]
@@ -162,10 +177,14 @@
 %  │   Content Functions    │
 %  └────────────────────────┘
     \newcommand{\pageSetup} {
-
         \let\Title\@title
         \let\Date\@date
         \let\Author\@author
+
+        % \setmainfont[Scale=1.1]{CMU Serif}
+        \setmainfont{lmroman10-regular.otf}
+        \setsansfont{lmsans10-regular.otf}[Scale=MatchLowercase]
+        \setmonofont{Courier}[Scale=MatchLowercase]
 
         % \patchcmd{\subsection}{\bfseries}{\normalsize}{}{}
         % \patchcmd{\subsection}{0.5em}{-0.5em}{}{}
@@ -253,11 +272,11 @@
         \renewcommand\listfigurename{\large{List of Figures}}
         \listoffigures
 
-        \renewcommand\listtablename{\large{List of Tables}}
-        \listoftables
-
-        \renewcommand\lstlistlistingname{\large{Listings}}
-        \lstlistoflistings 
+        % \renewcommand\listtablename{\large{List of Tables}}
+        % \listoftables
+        %
+        % \renewcommand\lstlistlistingname{\large{Listings}}
+        % \lstlistoflistings 
 
         \newpage
         \pagenumbering{arabic}
@@ -276,7 +295,6 @@
         %\fancyfoot[R]{Bottom Right}
         \renewcommand{\footrulewidth}{0.5pt}
     }
-
 
 \begin{document}
     \main
