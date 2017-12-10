@@ -1,0 +1,28 @@
+{
+    "usageCount": 0, 
+    "omitTrigger": true, 
+    "prompt": false, 
+    "description": "dash", 
+    "abbreviation": {
+        "wordChars": "[^ \\n]", 
+        "abbreviations": [
+            "/dash"
+        ], 
+        "immediate": false, 
+        "ignoreCase": false, 
+        "backspace": true, 
+        "triggerInside": false
+    }, 
+    "hotkey": {
+        "hotKey": null, 
+        "modifiers": []
+    }, 
+    "modes": [], 
+    "showInTrayMenu": false, 
+    "filter": {
+        "regex": null, 
+        "isRecursive": false
+    }, 
+    "type": "script", 
+    "store": {}
+}
