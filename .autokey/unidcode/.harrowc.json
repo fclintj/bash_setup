@@ -1,20 +1,20 @@
 {
-    "usageCount": 20, 
+    "usageCount": 5, 
     "omitTrigger": true, 
     "prompt": false, 
-    "description": "list", 
+    "description": "harrowc", 
     "abbreviation": {
         "wordChars": "[^ \\n]", 
         "abbreviations": [
-            "/bullet", 
-            "/dot", 
-            "/point", 
-            "/list"
+            "/arrowc", 
+            "/headerc", 
+            "/chead", 
+            "/headc"
         ], 
         "immediate": false, 
         "ignoreCase": false, 
         "backspace": true, 
-        "triggerInside": false
+        "triggerInside": true
     }, 
     "hotkey": {
         "hotKey": null, 

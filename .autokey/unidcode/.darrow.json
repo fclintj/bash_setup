@@ -1,23 +1,25 @@
 {
-    "usageCount": 0, 
+    "usageCount": 1, 
     "omitTrigger": true, 
     "prompt": false, 
-    "description": "rarrow", 
+    "description": "darrow", 
     "abbreviation": {
         "wordChars": "[^ \\n]", 
         "abbreviations": [
-            "/rarrow"
+            "/darrow"
         ], 
         "immediate": false, 
         "ignoreCase": false, 
         "backspace": true, 
-        "triggerInside": false
+        "triggerInside": true
     }, 
     "hotkey": {
         "hotKey": null, 
         "modifiers": []
     }, 
-    "modes": [], 
+    "modes": [
+        1
+    ], 
     "showInTrayMenu": false, 
     "filter": {
         "regex": null, 

@@ -1,17 +1,17 @@
 {
-    "usageCount": 0, 
+    "usageCount": 2, 
     "omitTrigger": true, 
     "prompt": false, 
     "description": "larrow", 
     "abbreviation": {
         "wordChars": "[^ \\n]", 
         "abbreviations": [
-            "/rarrow"
+            "/larrow"
         ], 
         "immediate": false, 
         "ignoreCase": false, 
         "backspace": true, 
-        "triggerInside": false
+        "triggerInside": true
     }, 
     "hotkey": {
         "hotKey": null, 

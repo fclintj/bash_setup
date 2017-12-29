@@ -15,7 +15,7 @@
     set showbreak=...  " adds "..." at wrapped line
     set noruler        " set row and col number at bottom
     set undofile       " maintain undo history between sessions
-    set undodir=~/.vim/undodir 
+    set undodir=~/.vim/undodir " set file path for undodir
     set foldmethod=indent " set nocompatible
     set ignorecase     " will search case insensitive if all lowercase 
     set smartcase      " if string includes Cap then sensitive 
@@ -115,7 +115,6 @@
 "" ┌───────────────────┐
 "" │ general commands  │
 "" └───────────────────┘
-
     "" break line up into readable lengths
     map tw vipgqvipgc
     "" join broken line with comments into single paragraph
@@ -123,4 +122,5 @@
     vnoremap <C-y> "+y 
     nnoremap <C-y>y "+yy
     nnoremap <C-P> "+P 
-    map g= ggVG=``
+    map g= mzgg=G`z 
+    imap <m-b> <right>

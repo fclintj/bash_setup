@@ -10,3 +10,4 @@ vim ./update.sh
 #   :DirDiff ~/dev/bash_setup/.vim/ ~/.vim/
 #   :DirDiff ~/dev/bash_setup/.latex/ ~/.latex/
 #   :DirDiff ~/dev/bash_setup/.tmux/ ~/.tmux/
+#   :DirDiff ~/dev/bash_setup/.autokey/ ~/.config/autokey/data/My\ Phrases/

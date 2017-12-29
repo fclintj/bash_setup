@@ -1,20 +1,17 @@
 {
-    "usageCount": 20, 
+    "usageCount": 0, 
     "omitTrigger": true, 
     "prompt": false, 
-    "description": "list", 
+    "description": "quotes", 
     "abbreviation": {
         "wordChars": "[^ \\n]", 
         "abbreviations": [
-            "/bullet", 
-            "/dot", 
-            "/point", 
-            "/list"
+            "/quotes"
         ], 
         "immediate": false, 
         "ignoreCase": false, 
         "backspace": true, 
-        "triggerInside": false
+        "triggerInside": true
     }, 
     "hotkey": {
         "hotKey": null, 

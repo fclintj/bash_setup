@@ -8,6 +8,6 @@ def paste_character(symbol):
     c.communicate(symbol.encode('utf-8'))
     keyboard.send_keys('<ctrl>+<shift>+v')
     
-paste_character('✔ ')
+paste_character('▶ ')
 
 

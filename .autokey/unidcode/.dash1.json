@@ -1,23 +1,26 @@
 {
-    "usageCount": 0, 
+    "usageCount": 9, 
     "omitTrigger": true, 
     "prompt": false, 
     "description": "dash", 
     "abbreviation": {
         "wordChars": "[^ \\n]", 
         "abbreviations": [
-            "/dash"
+            "/dash", 
+            "/--"
         ], 
         "immediate": false, 
         "ignoreCase": false, 
         "backspace": true, 
-        "triggerInside": false
+        "triggerInside": true
     }, 
     "hotkey": {
         "hotKey": null, 
         "modifiers": []
     }, 
-    "modes": [], 
+    "modes": [
+        1
+    ], 
     "showInTrayMenu": false, 
     "filter": {
         "regex": null, 

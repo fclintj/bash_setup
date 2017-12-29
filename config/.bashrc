@@ -129,51 +129,51 @@
 # ┌────────────────────────┐
 # │  Formatting Functions  │
 # └────────────────────────┘
-function print_title() {
-    typeset spaces
-    typeset i=0 
-    typeset j=0
-    
-    if (("$#" < 1 )); 
-    then 
-        echo $(red_bold Error:) Argument required
-        return 1
-    fi
+    function print_title() {
+        typeset spaces
+        typeset i=0 
+        typeset j=0
+        
+        if (("$#" < 1 )); 
+        then 
+            echo $(red_bold Error:) Argument required
+            return 1
+        fi
 
-    echo -e ┌───────────────────────────────┐
-    for i in "$@"
-    do
-        echo -en │ $i
-        ((spaces=30-${#i}))
+        echo -e ┌───────────────────────────────┐
+        for i in "$@"
+        do
+            echo -en │ $i
+            ((spaces=30-${#i}))
 
-        for j in `seq 1 $spaces` 
-        do 
-            echo -en " "
+            for j in `seq 1 $spaces` 
+            do 
+                echo -en " "
+            done
+            echo -e │    
         done
-        echo -e │    
-    done
-    echo -e └───────────────────────────────┘
-}
-# Ex: echo "This is a $(underline test)"
-function bold() {
-    echo -e "\e[1m$1\e[0m"
-}
+        echo -e └───────────────────────────────┘
+    }
+    # Ex: echo "This is a $(underline test)"
+    function bold() {
+        echo -e "\e[1m$1\e[0m"
+    }
 
-function red() {
-    echo -e "\e[31m$1\e[0m"
-}
+    function red() {
+        echo -e "\e[31m$1\e[0m"
+    }
 
-function italics() {
-    echo -e "\e[3m$1\e[0m"
-}
+    function italics() {
+        echo -e "\e[3m$1\e[0m"
+    }
 
-function underline() {
-    echo -e "\e[4m$1\e[0m"
-}
+    function underline() {
+        echo -e "\e[4m$1\e[0m"
+    }
 
-function red_bold() {
-    echo -e "\e[1m$(echo -e "\e[31m$1\e[0m")\e[0m"
-}
+    function red_bold() {
+        echo -e "\e[1m$(echo -e "\e[31m$1\e[0m")\e[0m"
+    }
 
 # ┌────────────────────────┐
 # │    Program Functions   │
@@ -277,6 +277,10 @@ function readpdf() {
     rm file.tiff
 }
 
+function findrm() {
+    find -iname $1 -exec rm {} \; 
+}
+
 # ┌────────────────────────┐
 # │     color settings     │
 # └────────────────────────┘
@@ -295,6 +299,9 @@ case $- in *i*)
         [ -z "$TMUX" ] && exec tmux # attach -t master 
 esac
 
+# make mouse disappear after 0.2 seconds
+unclutter -idle 0.2 -root &
+
 # pipe output from terminal into clipboard
 alias "c=xclip"
 alias "v=xclip -o"
@@ -309,14 +316,21 @@ alias la='ls -A'
 alias l='ls -CF'
 alias lslarge='find -type f -exec ls -s {} \; | sort -n -r | head -5 | pv'
 
-# directory/file locations
-
+# general directory/file locations
 alias drive='cd /mnt/CE6C52926C527565/Users/clint/Google\ Drive/'
 alias wiki='vim /mnt/CE6C52926C527565/Users/clint/Google\ Drive/dev/vimwiki/index.wiki'
 alias cdwiki='vim /mnt/CE6C52926C527565/Users/clint/Google\ Drive/dev/vimwiki/index.wiki'
 alias cdjournal='cd /mnt/CE6C52926C527565/Users/clint/Google\ Drive/Journaling/vim_journal'
-alias cdneural='cd /mnt/CE6C52926C527565/Users/clint/Google\ Drive/School/Classes/Neural\ Networks/dev'
-# alias python='python3'
 alias cdgospel='cd /mnt/CE6C52926C527565/Users/clint/Google\ Drive/Gospel/Calling/Gospel\ Principles'
 alias cdsnippets='cd ~/.vim/bundle/vim-snippets/snippets'
 alias d='nemo . &'
+
+alias bashrc='vim ~/.bashrc'
+alias vimrc='vim ~/.vimrc'
+alias vim-run='vim ~/.vim/run_prog.sh'
+# classes
+alias cdneural='cd /mnt/CE6C52926C527565/Users/clint/Google\ Drive/School/Classes/Neural\ Networks/dev'
+alias cddsip='cd /mnt/CE6C52926C527565/Users/clint/Google\ Drive/School/Classes/Discrete\ Signals\ Processing/programming/'
+# alias python='python3'
+alias matlab='LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.21 /usr/local/bin/matlab -desktop'
+alias e='nemo . &'
