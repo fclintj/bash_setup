@@ -1,12 +1,61 @@
 #version 1
 #PREAMBLE
+
 #newcommand
 
 # Personal Snippets
-snippet entry 
-	\\section{${1}}	
-	\bigL{${2}}{${3}}
-	${0}
+snippet svg 
+	\\svg{./media/svg/}{H}{\small}{0.8}{Cap}{fig:}
+	
+
+snippet href \hyperlink
+	\\href{https://drive.google.com/open?id=0B5NW7S3txe5UTE0xSHJHNWxJbEE}{\underline{this link}} 
+
+snippet link \hyperlink
+	\\href{https://drive.google.com/open?id=0B5NW7S3txe5UTE0xSHJHNWxJbEE}{\underline{this link}} 
+
+snippet line \line
+	\\line{0.75}{0.5pt}
+
+snippet tab \table
+	\\begin{table}[H]
+		\\begin{tabulary}{\linewidth}{rccc}	
+			&& \multicolumn{2}{c}                   {Errors in \%}            \\\
+		 	\\toprule % --------------------------------------------
+					 Method	         & Run-time &    Training  &  Test     \\\ 
+		 	\\toprule % ---------------------------------------------
+			1-Nearest Neighbor	      &  35.02s  &      00.0    &  21.83    \\\ 
+			5-Nearest Neighbor	      &  37.92s  &      12.0    &  20.29    \\\ 
+			\\bottomrule % ------------------------------------------ 
+		\\end{tabulary}\caption{Caption}\label{tab:}\end{table} 
+	
+snippet tab2 \table
+	\\begin{table}[H]
+		\\begin{tabulary}{\linewidth}{ll}	
+		 	\\toprule % --------------------------------------------
+		  	Filter Type                 & Run-time   \\\
+		 	\\toprule % ---------------------------------------------
+			  1-Nearest Neighbor	      &  35.02s    \\\ 
+			  5-Nearest Neighbor	      &  37.92s    \\\ 
+			\\bottomrule % ------------------------------------------ 
+		\\end{tabulary}\caption{Caption}\label{tab:}\end{table} 
+	
+
+snippet tik \tikz enviroment
+	\\tikz{.tikz}{file}{fig:}
+
+snippet mat \ matPlot
+	\\matPlot{./media/matplot/}{0.5}{}{fig:h-n-impulse-response}
+
+snippet mat2 \ 2 matplot
+	\\matPlotTwo
+	{./media/}{.45} 
+	{./media/}{.45} 
+	{Caption}
+	{toc}{fig:}
+
+snippet mo \monotfont
+	\\mono{${0}}
 
 snippet " \U+201C and U+201D
 	“${0}”
@@ -15,6 +64,13 @@ snippet marg
 	\\margin{
 		${0}
 	}
+
+snippet fig2 \figure environment (includegraphics)
+	\\newFigureTwo
+	{./media/}{.6}
+	{./media/}{.6}
+	{Caption}{TOC}
+	{fig:}
 
 snippet te
 	\\texttt{${0}}
@@ -25,11 +81,17 @@ snippet month \function with sections
 		${0}
 	}
 
+snippet lstcpp \c++listing
+	\\lstCpp{../source/${1}}{${2}}{lst:${0}}[0][100]
+
+snippet lstmat \c++listing
+	\\lstMat{../matlab/${1}}{${2}}{lst:${0}}[0][100]
+
 snippet lst \listing
 	\\lstinputlisting[language=Python,firstline=100,lastline=150,]{../python/3_linear.py}
 
 snippet lstpy
-	\lstpy{../python/}{Caption Description }{lst:}[0][10]
+	\lstPy{../python/}{Caption Description }{lst:}[0][10]
 
 
 snippet cpplisting
@@ -67,10 +129,6 @@ snippet begin \begin{} ... \end{} block
 		${0:${VISUAL}}
 	\\end{$1}
 # Tabular
-snippet tab tabular (or arbitrary) environment
-	\\begin{${1:tabular}}{${2:c}}
-		${0:${VISUAL}}
-	\\end{$1}
 snippet thm thm (or arbitrary) environment with optional argument
 	\\begin[${1:author}]{${2:thm}}
 		${0:${VISUAL}}
@@ -124,19 +182,27 @@ snippet enum enumerate environment
 	\\begin{enumerate}
 		\\item ${0}
 	\\end{enumerate}
+
 snippet enuma enumerate environment
 	\\begin{enumerate}[(a)]
 		\\item ${0}
 	\\end{enumerate}
+
 snippet enumi enumerate environment
 	\\begin{enumerate}[(i)]
 		\\item ${0}
 	\\end{enumerate}
+
 # Itemize
+snippet list itemize environment
+	\\begin{itemize}
+		\\item ${0}
+	\\end{itemize}\vspace{-1em}
+
 snippet item itemize environment
 	\\begin{itemize}
 		\\item ${0}
-	\\end{itemize}
+	\\end{itemize}\vspace{-1em}
 snippet it \item
 	\\item ${1:${VISUAL}}
 # Description
@@ -149,10 +215,10 @@ snippet ]i \item (recursive)
 	\\item ${1}
 		${0:]i}
 # Matrix
-snippet mat smart matrix environment
-	\\begin{${1:p/b/v/V/B/small}matrix}
-		${0:${VISUAL}}
-	\\end{$1matrix}
+# snippet mat smart matrix environment
+# 	\\begin{${1:p/b/v/V/B/small}matrix}
+# 		${0:${VISUAL}}
+# 	\\end{$1matrix}
 # Cases
 snippet cas cases environment
 	\\begin{cases}
@@ -278,11 +344,6 @@ snippet ft \footnote
 snippet fig figure environment (includegraphics)
 	\\newFigure{./media}{}{.6}{fig:}
 
-snippet fig2 figure environment (includegraphics)
-	\\newFigureTwo
-	{./media/}{}{.6}
-	{./media/}{}{.6}
-	{}{fig:sobel}
 	
 
 snippet tikz figure environment (tikzpicture)
@@ -370,16 +431,14 @@ snippet lra langle rangle
 	\\langle ${0} \\rangle
 # Code listings
 snippet code 
-	\\begin{listing}[language=${1:language}]
+	\\begin{lstlisting}[language=${1:language}]
 		${0:${VISUAL}}
-	\\end{listing}
+	\\end{lstlisting}
 snippet lsi
 	\\lstinline|${1}| ${0}
 # Hyperlinks
 snippet url
 	\\url{${1}} ${0}
-snippet href
-	\\href{${1}}{${2}} ${0}
 # URL from Clipboard.
 snippet urlc
 	\\url{`@+`} ${0}
