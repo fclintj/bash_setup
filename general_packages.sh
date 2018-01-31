@@ -1,73 +1,32 @@
 #!/bin/bash
 
-# Title: Set-up Linux Environment
-
-  # Checks to see if tmux and vim are installed, and moves creates new .tmux,
-  # .vim and .basrc files for a programming environment on Linux
+# General Package Installation
+# Author: Clint Ferrin
+# Date: Wed Jan 10, 2018
 
 main(){
-# check parameters
-handleopts "$@"
-
 # check if proper packages are installed 
-check_install vim-gnome
 check_install autokey-gtk
-check_install tmux
-check_install exuberant-ctags
-check_install gdb
+check_install texlive-full
+check_install inkscape
+check_install handbrake
+check_install audacity
+check_install gtkpod
+check_install easytag 
+check_install build-essential
+check_install okular 
 
-# YCM
-# sudo apt-get install build-essential cmake
+# install python
+check_install python-pip 
+check_install python3-pip 
+check_install libssl-dev 
+check_install libffi-dev 
+check_install python-dev
+sudo apt-get -y install python-numpy python-scipy python-matplotlib 
+sudo apt-get -y install python3-numpy python3-scipy python3-matplotlib 
 
-# copy files and create backup if necessary
-echo Backup files created:
-# cp_backup config/.vimrc ~/
-# cp_backup config/.tmux.conf ~/
-# cp_backup config/.bashrc ~/
-# cp_backup config/.inputrc ~/
-# cp_backup .tmux ~/
-# cp_backup .vim ~/
-cp_backup .autokey/unicode ~/.config/autokey/data/
-
-# cd ~/.vim/bundle/YouCompleteMe
-# python install.py --clang-completer
-
-echo
-echo Files successfully copied and nececssary packages verified.
-
+echo Specified packages verified.
 exit 0
-}
-function usage() {
-    name=$(basename $0)
-    echo $(bold "NAME: ") 
-    echo ${name%.*} -  copy vim and tmux folders |  indent
-    echo
-
-    # description
-    echo $(bold "PROGRAM DESCRIPTION: ") 
-        echo The program $0 Copies all vim and tmux folders to create a programming environment on linux | indent
-        echo
-
-        echo $(bold "-n, --no-backup") | indent
-        echo Copies environment to home directory without creating a backup of your current folders. Caution: this is a destructive action. | indent 2
-        echo
-            
-        echo $(bold "-o [name], --open-vim") | indent
-        echo "Copies all files and folders and then opens a test document [name.type] in the current folder." | indent 2
-        echo
-
-        echo $(bold "-v, --version") | indent
-        echo Output Version information for program and exit. | indent 2
-        echo
-
-        echo $(bold "-h, --help") | indent
-        echo Display this help documentation and exit program. | indent 2
-        echo
-        
-
-    # author 
-    echo $(bold "AUTHOR: ") 
-    echo Written by Clint Ferrin | indent
 }
 
 function handleopts() {
@@ -113,9 +72,11 @@ function check_install() {
     if (($(dpkg-query -W -f='${Status}' $1 2>/dev/null | grep -c "ok installed")==0))
     then 
         echo "The program "$1" is not installed. Would you like to install it? (Y/n)"
-        if [[ $(validate_Y_n) ]]
+        # if [[ $(validate_Y_n) ]]
+        if [[ 1 ]]
+         
         then
-            sudo apt install $1
+            sudo apt -y install $1
         else
             echo $1 must be intalled for proper functionality 
         fi
@@ -179,8 +140,7 @@ function bold() {
 }
 
 function indent() {
-    # give parameter for number of tabs forward
-    typeset tabs
+    typeset tabs # give parameter for number of tabs forward
     typeset spaces
     
     if (($# == 0))
@@ -197,3 +157,4 @@ function indent() {
 }
 
 main "$@"
+

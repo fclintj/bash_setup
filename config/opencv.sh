@@ -1,59 +1,47 @@
-#!/bin/bash
-
-# Title: Set-up Linux Environment
+#/bin/bash
+# Title: Set-up openCV 
 
   # Checks to see if tmux and vim are installed, and moves creates new .tmux,
   # .vim and .basrc files for a programming environment on Linux
 
 main(){
-# check parameters
+# # check parameters
 handleopts "$@"
 
 # check if proper packages are installed 
-check_install vim-gnome
-check_install autokey-gtk
-check_install tmux
-check_install exuberant-ctags
-check_install gdb
+check_install build-essential
+check_install git 
+check_install cmake
+check_install libgtk2.0-dev 
+check_install pkg-config 
+check_install libavcodec-dev 
+check_install libavformat-dev 
+check_install libswscale-dev
 
-# YCM
-# sudo apt-get install build-essential cmake
+cd /opt/
+sudo git clone https://github.com/Itseez/opencv.git
+sudo git clone https://github.com/Itseez/opencv_contrib.git
+cd ./opencv/
+mkdir release
+cd release
+cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local -D OPENCV_EXTRA_MODULES_PATH=/opt/opencv_contrib/modules /opt/opencv/
 
-# copy files and create backup if necessary
-echo Backup files created:
-# cp_backup config/.vimrc ~/
-# cp_backup config/.tmux.conf ~/
-# cp_backup config/.bashrc ~/
-# cp_backup config/.inputrc ~/
-# cp_backup .tmux ~/
-# cp_backup .vim ~/
-cp_backup .autokey/unicode ~/.config/autokey/data/
-
-# cd ~/.vim/bundle/YouCompleteMe
-# python install.py --clang-completer
-
-echo
-echo Files successfully copied and nececssary packages verified.
+sudo make -j 4
+sudo make install
+pkg-config --modversion opencv
 
 exit 0
 }
+
 function usage() {
     name=$(basename $0)
     echo $(bold "NAME: ") 
-    echo ${name%.*} -  copy vim and tmux folders |  indent
+    echo ${name%.*} -  Install OpenCV |  indent
     echo
 
     # description
     echo $(bold "PROGRAM DESCRIPTION: ") 
-        echo The program $0 Copies all vim and tmux folders to create a programming environment on linux | indent
-        echo
-
-        echo $(bold "-n, --no-backup") | indent
-        echo Copies environment to home directory without creating a backup of your current folders. Caution: this is a destructive action. | indent 2
-        echo
-            
-        echo $(bold "-o [name], --open-vim") | indent
-        echo "Copies all files and folders and then opens a test document [name.type] in the current folder." | indent 2
+        echo The program $0 will install the most current version of OpenCV on your system using the tutorial from the following site: http://embedonix.com/ articles/image-processing/ installing-opencv-3-1-0-on-ubuntu/ | indent
         echo
 
         echo $(bold "-v, --version") | indent
@@ -115,7 +103,7 @@ function check_install() {
         echo "The program "$1" is not installed. Would you like to install it? (Y/n)"
         if [[ $(validate_Y_n) ]]
         then
-            sudo apt install $1
+            sudo apt -y install $1
         else
             echo $1 must be intalled for proper functionality 
         fi
