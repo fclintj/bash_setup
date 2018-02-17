@@ -9,7 +9,7 @@ main(){
 # check parameters
 handleopts "$@"
 
-# check if proper packages are installed 
+check if proper packages are installed 
 check_install vim-gnome
 check_install autokey-gtk
 check_install tmux
@@ -17,19 +17,23 @@ check_install exuberant-ctags
 check_install gdb
 
 # YCM
-# sudo apt-get install build-essential cmake
+sudo apt-get install build-essential cmake
 
 # copy files and create backup if necessary
 echo Backup files created:
-# cp_backup config/.vimrc ~/
-# cp_backup config/.tmux.conf ~/
-# cp_backup config/.bashrc ~/
-# cp_backup config/.inputrc ~/
-# cp_backup .tmux ~/
-# cp_backup .vim ~/
+cp_backup ./config/.vimrc ~/
+cp_backup ./config/.tmux.conf ~/
+cp_backup ./config/.bashrc ~/
+cp_backup ./config/.inputrc ~/
+cp_backup ./config/.gitconfig ~/
+cp_backup ./config/.gitignore ~/
+cp_backup .tmux ~/
+cp_backup .vim ~/
 cp_backup .autokey/unicode ~/.config/autokey/data/
 
 # cd ~/.vim/bundle/YouCompleteMe
+# git clone https://github.com/Valloric/YouCompleteMe.git
+# git submodule update --init --recursiv://github.com/Valloric/YouCompleteMe.git
 # python install.py --clang-completer
 
 echo
@@ -110,7 +114,7 @@ function handleopts() {
 
 function check_install() {
     typeset ans
-    if (($(dpkg-query -W -f='${Status}' $1 2>/dev/null | grep -c "ok installed")==0))
+    if (($(dpkg-query -W -f='${Status}' $1 2>/dev/null | grep -c "OK installed")==0))
     then 
         echo "The program "$1" is not installed. Would you like to install it? (Y/n)"
         if [[ $(validate_Y_n) ]]
