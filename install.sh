@@ -30,9 +30,10 @@ cp_backup ./config/.gitignore ~/
 cp_backup .tmux ~/
 cp_backup .vim ~/
 cp_backup .autokey/unicode ~/.config/autokey/data/
+cp_backup ./config/packages.py ~/.ipython/profile_default/startup/
 
-# cd ~/.vim/bundle/YouCompleteMe
-# git clone https://github.com/Valloric/YouCompleteMe.git
+# Cd ~/.vim/bundle/You Complete Me
+# git clone HTTP://github.com/Valloric/YouCompleteMe.git
 # git submodule update --init --recursiv://github.com/Valloric/YouCompleteMe.git
 # python install.py --clang-completer
 
