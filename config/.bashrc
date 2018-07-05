@@ -290,6 +290,11 @@ function findrm() {
 # http://linux-sxs.org/housekeeping/lscolors.html 
 
 # ┌────────────────────────┐
+# │     PATH variables     │
+# └────────────────────────┘
+    source /opt/ros/melodic/setup.bash
+
+# ┌────────────────────────┐
 # │  General Instructions  │
 # └────────────────────────┘
 # turn on vim commands in terminal
@@ -299,8 +304,8 @@ case $- in *i*)
         [ -z "$TMUX" ] && exec tmux # attach -t master 
 esac
 
-# make mouse disappear after 0.2 seconds
-unclutter -idle 0.2 -root &
+# # make mouse disappear after 0.2 seconds
+# unclutter -idle 0.2 -root &
 
 # pipe output from terminal into clipboard
 alias "c=xclip"
@@ -317,20 +322,17 @@ alias l='ls -CF'
 alias lslarge='find -type f -exec ls -s {} \; | sort -n -r | head -5 | pv'
 
 # general directory/file locations
-alias drive='cd /mnt/CE6C52926C527565/Users/clint/Google\ Drive/'
-alias wiki='vim /mnt/CE6C52926C527565/Users/clint/Google\ Drive/dev/vimwiki/index.wiki'
-alias cdwiki='vim /mnt/CE6C52926C527565/Users/clint/Google\ Drive/dev/vimwiki/index.wiki'
-alias cdjournal='cd /mnt/CE6C52926C527565/Users/clint/Google\ Drive/Journaling/vim_journal'
-alias cdgospel='cd /mnt/CE6C52926C527565/Users/clint/Google\ Drive/Gospel/Calling/Gospel\ Principles'
 alias cdsnippets='cd ~/.vim/bundle/vim-snippets/snippets'
 alias d='nemo . &'
+alias e='nemo . &'
 
 alias bashrc='vim ~/.bashrc'
 alias vimrc='vim ~/.vimrc'
 alias vim-run='vim ~/.vim/run_prog.sh'
-# classes
-alias cdneural='cd /mnt/CE6C52926C527565/Users/clint/Google\ Drive/School/Classes/Neural\ Networks/dev'
-alias cddsip='cd /mnt/CE6C52926C527565/Users/clint/Google\ Drive/School/Classes/Discrete\ Signals\ Processing/programming/'
-# alias python='python3'
-alias matlab='LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.21 /usr/local/bin/matlab -desktop'
-alias e='nemo . &'
+alias cdrtp='cd ~/Google\ Drive/School/Classes/Real\ Time\ Processors'
+alias cdFountain='cd ~/Google\ Drive/School/Classes/Mechatronics/prog/audio-fountain/src/'
+
+
+
+# programs
+# export ARMADILLO_LIBRARY=/home/rcf-40/haifengc/panfs/armadillo-6.500.4/include

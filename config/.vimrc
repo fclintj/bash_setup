@@ -16,13 +16,32 @@
     set noruler        " set row and col number at bottom
     set undofile       " maintain undo history between sessions
     set undodir=~/.vim/undodir " set file path for undodir
-    set foldmethod=indent " set nocompatible
+    " set foldmethod=manual " set nocompatible
+    set foldmethod=indent " manual (zf), indent, syntax, expr, marker 
     set ignorecase     " will search case insensitive if all lowercase 
     set smartcase      " if string includes Cap then sensitive 
                        " /copyright\C " Case sensitive 
     set display+=lastline " show as much as possible of last line 
     set nocompatible
     set clipboard=unnamed    
+
+
+"" ┌───────────────────┐
+"" │  restore cursor   │
+"" └───────────────────┘
+    set viminfo='10,\"100,:20,%,n~/.viminfo
+    function! ResCur()
+      if line("'\"") <= line("$")
+        normal! g`"
+        return 1
+      endif
+    endfunction
+
+    augroup resCur
+      autocmd!
+      autocmd BufWinEnter * call ResCur()
+    augroup END
+
     
 "" ┌───────────────────┐
 "" │    theme setup    │

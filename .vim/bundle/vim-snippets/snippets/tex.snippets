@@ -17,6 +17,26 @@ snippet link \hyperlink
 snippet line \line
 	\\line{0.75}{0.5pt}
 
+
+snippet tabx \table
+	\\begin{table}[H]
+		\\centering
+		\\begin{tabularx}{\textwidth}{lmccm}
+		\\toprule % --------------------------------------------------------
+		\\#  & Test Name & Pass & Fail & Notes \\
+		\\toprule % --------------------------------------------------------
+		  1 & User shall be able to begin program with the ``-run" command. 				 
+		  	&  mark  &          &      
+			\\\ 
+		  2 & User shall be able to calibrate system with the ``-command" command. 
+			&  mark &        &	
+			By default the system re-calibrates.	
+			\\\ 
+			\\bottomrule
+			\\end{tabularx}
+			\\end{table}
+
+
 snippet tab \table
 	\\begin{table}[H]
 		\\begin{tabulary}{\linewidth}{rccc}	
@@ -55,7 +75,7 @@ snippet mat2 \ 2 matplot
 	{toc}{fig:}
 
 snippet mo \monotfont
-	\\mono{${0}}
+	\\mono{${1}}{.2}
 
 snippet " \U+201C and U+201D
 	“${0}”
@@ -84,6 +104,9 @@ snippet month \function with sections
 snippet lstcpp \c++listing
 	\\lstCpp{../source/${1}}{${2}}{lst:${0}}[0][100]
 
+snippet cppListing \c++listing
+	\\lstCpp{../source/${1}}{${2}}{lst:${0}}[0][100]
+
 snippet lstmat \c++listing
 	\\lstMat{../matlab/${1}}{${2}}{lst:${0}}[0][100]
 
@@ -93,9 +116,6 @@ snippet lst \listing
 snippet lstpy
 	\lstPy{../python/}{Caption Description }{lst:}[0][10]
 
-
-snippet cpplisting
-	\\cpplisting{../source/}{}{code:}[10][12]
 
 snippet func* \function with sections
 	\\DeclareDocumentCommand{${1:cmd}} {

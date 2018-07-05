@@ -1,6 +1,5 @@
 #!/bin/bash
-main() 
-{
+main() {
     name=$1
     # get parameters, if available
     for i in $(<params)
@@ -16,9 +15,37 @@ main()
         start=$(date +%s%3N)
         bash $1 $output
 
+    # run program based on file extension
+    elif [[ $1 == image_processor.cpp ]]; then
+        clear
+        echo  "Special:"
+        echo  "-------- Building --------"
+        make -sC ../../../cmake-build-debug
+        if [ $? -eq 0 ] 
+        then
+            clear
+            echo  "Special:"
+            echo  "-------- Running ---------"
+            start=$(date +%s%3N)
+            name=$1
+            ../../../cmake-build-debug/camera_array $output
+        else
+            start=$(date +%s%3N)
+            echo "Could not compile" 
+        fi 
+
     elif [[ $1 == *.swift ]]; then
         start=$(date +%s%3N)
         swift $1 $output
+
+    elif [[ $1 == *.r ]]; then
+        start=$(date +%s%3N)
+        Rscript $1 $output
+
+    elif [[ $1 == *.cu ]]; then
+        start=$(date +%s%3N)
+        make
+        ./$name $output
 
     elif [[ $1 == *.cpp || $1 == *.c ]]; then
         clear
@@ -62,10 +89,18 @@ main()
         start=$(date +%s%3N)
         xelatex -output-directory=build $name
         mv build/${name%.*}.pdf ./
+        
+        # update .bib file if necessary
+        bib=$(grep -r -F --include "*.tex" '\cite')
+
+        if [[ $bib != "" ]]; then
+            biber ./build/${name%.*}
+        fi
+
         if ps aux | grep okular | grep -v grep 
-        then echo
-        else
-            okular ${name%.*}.pdf &
+            then echo
+            else
+                okular ${name%.*}.pdf &
         fi
     else
         echo Not an executable file type. Edit file ~/.vim/exec.sh

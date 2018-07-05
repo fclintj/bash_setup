@@ -1,0 +1,264 @@
+\documentclass{article}\makeatletter\usepackage{xparse}
+%  ┌────────────────────────┐
+%  │        Packages        │
+%  └────────────────────────┘
+    % necessary packages
+        \usepackage{fontspec}   % allows Unicode in XeLaTex
+        \usepackage{ucharclasses} % allows Unicode in XeLaTex
+        \usepackage[utf8]{inputenc}	% allows new character options
+        \usepackage[a4paper]{geometry} % Paper dimensions and margins
+        \usepackage{titletoc}   % change Table of Contents settings
+        \usepackage{etoolbox}   % alters toc settings (learn in future)
+        \usepackage{fancyhdr}   % include document header
+        \usepackage{hyperref}	% creates hyper-link color options
+        \usepackage{url}    	% package for url links
+        \usepackage{graphicx}	% manage images and graphics
+        \usepackage{subcaption} % add two plots together
+        \usepackage{color}      % include colors for 
+        \usepackage{floatrow}	% allows placement of figures [H]
+        \usepackage{enumitem}   % create lists
+        \usepackage{scrextend}  % \begin{addmargin}[<left indent>]{<indent>}
+        \usepackage{listings, lstautogobble} % includes ability to input code
+        \usepackage{cleveref}	% (\Cref) include "Figure" on \reff 
+
+    % tables
+        \usepackage{booktabs}   % allows for \toprule in tables
+        % \usepackage{tabulary}	% table columns size of their contents (on page)
+        \usepackage{tabularx}
+        \newcolumntype{b}{>{\hsize=2.3\hsize}X}
+        \newcolumntype{s}{>{\hsize=.45\hsize}X}
+        \newcolumntype{m}{>{\hsize=.9\hsize}X}
+
+    % checkmark with tikz
+        % \usepackage{tikz}
+        % \def\checkmark{\tikz\fill[scale=0.4](0,.35) -- (.25,0) -- (1,.7) -- (.25,.15) -- cycle;} 
+
+    % math packages
+        % \usepackage{bm}         % use of bold characters in math mode
+        % \usepackage{amsmath}    % allows equations to be split
+        % \usepackage[nomessages]{fp} % calculations in latex
+        % % function to create magnitude bars around a function
+        %     \newcommand\longvar[1]{\mathchardef\UrlBreakPenalty=100
+        %     \mathchardef\UrlBigBreakPenalty=100\url{#1}}
+        %     \newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+
+
+    % packages used in past
+        % \usepackage{pdfpages}   % include entire pdf documents
+        % \usepackage{xstring}    % StrSubstitute replace character
+        \usepackage{caption}    % removes figure from LoF: \caption[]{}
+
+    % code and file variables
+    \definecolor{light-gray}{gray}{0.95}    % gray that stack exchange uses
+    \definecolor{mygreen}{RGB}{28,172,0}	% custom defined colors
+    \definecolor{mylilas}{RGB}{170,55,241}
+    \definecolor{mymauve}{rgb}{0.58,0,0.82}
+
+    \lstset {
+        language=Python,
+        backgroundcolor = \color{light-gray},
+        breaklines		= true,
+        tabsize         = 4,
+        keywordstyle    = \color{blue},
+        morekeywords    = [2]{1}, keywordstyle=[2]{\color{black}},
+        identifierstyle = \color{black},
+        stringstyle     = \color{mylilas},
+        commentstyle    = \color{mygreen},
+        numbers         = left,
+        numberstyle     = {\tiny \color{black}},	% size of the numbers
+        numbersep       = 6pt, 						% distance of numbers from text
+        emph            = [1]{as, for, end, break}, % bold for, end, break...
+        emphstyle 		= [1]\color{red}, 			% emphasis
+        basicstyle		= \footnotesize\ttfamily,	% set font to courier
+        frameround      = ffff,                     % TR, BR, BL, TL. t(round)|f(flat)
+        frame           = single,                   % single line all around
+        showstringspaces= false,                    % blank spaces appear as written
+        autogobble      = true
+    }
+
+%  ┌────────────────────────┐
+%  │      Common Tasks      │
+%  └────────────────────────┘
+    \DeclareDocumentCommand{\commontasks}{m} {
+        \href{https://drive.google.com/open?id=0B5NW7S3txe5UTE0xSHJHNWxJbEE}{\underline{this link}} 
+        \mono{PYTHON}
+        \lstinputlisting[language=Python]{../python/3_linear.py}
+
+        % two figures side by side
+        \begin{figure}[H]
+            \includegraphics[width=.45\linewidth]{./media/1-nearest.pdf}\hfill 
+            \includegraphics[width=.45\linewidth]{./media/5-nearest.pdf}
+            \caption[k=1 and k=5 Nearest Neighbor]{Left: k=1 Nearest Neighbor. Right: k=5 Nearest Neighbor}
+            \label{fig:kNearOneAndFive}
+        \end{figure}
+    }
+
+%  ┌────────────────────────┐
+%  │   General Functions    │
+%  └────────────────────────┘
+    \DeclareDocumentCommand{\svg}{m m m m m m} { 
+        % inkscape -D -z --file=network.svg --export-pdf=network.pdf --export-latex
+        \begin{figure}[#2]
+            \centering
+            #3
+            \def\svgwidth{#4\linewidth}
+            \input{#1}
+            \caption{#5}
+            \label{#6}
+        \end{figure}
+    }
+
+    \DeclareDocumentCommand{\tikz}{mmm} {
+        \begin{figure}[H]
+            \begin{center}
+                \includegraphics[]{#1}
+                \caption{#2}
+                \label{#3} 
+            \end{center}
+        \end{figure} 
+    }
+    
+    \DeclareDocumentCommand{\mono}{mm} {
+        \sloppy
+        \lstinline{#1} 
+        \hspace{-.7em}
+        \hspace{#2em}
+    }
+
+    \DeclareDocumentCommand{\matPlot}{mmmm} {
+        \begin{figure}[H]
+            \centering
+            \renewcommand{\figurescale}{#2} 
+            \input{#1}
+            \caption{#3}
+            \label{#4}
+        \end{figure}
+    }
+
+    \DeclareDocumentCommand{\matPlotTwo}{mmmmmmm} {
+        \begin{figure}[H]
+        \centering
+        \begin{subfigure}{.5\textwidth}
+          \centering
+            \renewcommand{\figurescale}{#2} 
+            \input{#1}
+          \caption{}
+        \end{subfigure}%
+        \begin{subfigure}{.5\textwidth}
+          \centering
+            \renewcommand{\figurescale}{#4} 
+            \input{#3}
+          \caption{}
+        \end{subfigure}
+        \caption[#6]{#5}
+        \label{#7}
+        \end{figure}
+    }
+
+    \DeclareDocumentCommand{\margin}{m} {
+        \begin{addmargin}[4em]{0em}
+            #1 
+        \end{addmargin} 
+    }
+
+    \DeclareDocumentCommand{\newFigureTwo}{mmmmmmm} {
+        % \FPeval{opposite}{1-#9}
+        \begin{figure}[H]
+        \centering
+        \begin{subfigure}{.5\textwidth}
+          \centering
+          \includegraphics[width=#2\linewidth]{#1}
+          \caption{}
+        \end{subfigure}%
+        \begin{subfigure}{.5\textwidth}
+          \centering
+          \includegraphics[width=#4\linewidth]{#3}
+          \caption{}
+        \end{subfigure}
+        \caption[#6]{#5}
+        \label{#7}
+        \end{figure}
+    }
+
+    \DeclareDocumentCommand{\lstPy}{m m m o o} {
+        % \lstinputlisting[language=C++,firstline=#4,lastline=#5,caption={#2},captionpos=b,label={#3}]{#1}
+        \lstinputlisting[language=Python,caption={#2},label={#3},firstline=#4,lastline=#5]{#1}%
+    }
+
+    \DeclareDocumentCommand{\lstCpp}{m m m o o} {
+        % \lstinputlisting[language=C++,firstline=#4,lastline=#5,caption={#2},captionpos=b,label={#3}]{#1}
+        \lstinputlisting[language=C++,caption={#2},label={#3},firstline=#4,lastline=#5]{#1}%
+    }
+
+    \DeclareDocumentCommand{\lstMat}{m m m o o} {
+        \lstinputlisting[language=Matlab,caption={#2},label={#3},firstline=#4,lastline=#5]{#1}%
+    }
+
+    \DeclareDocumentCommand{\reff}{m} {
+        \edef\link{#1}
+        \hspace{-0.5em}\hyperref[\link]{\Cref*{\link}} \hspace{-0.65em}
+    }
+
+    \DeclareDocumentCommand{\newFigure}{m m m m} {
+        \edef\path{#1} \edef\figcaption{#2} \edef\size{#3}  
+        \begin{figure}[H]
+            \begin{center}
+                \includegraphics[width=\size\textwidth]{\path}
+                \caption{\figcaption}
+                \label{#4} % label gets rid of type and -.
+            \end{center}
+        \end{figure} 
+    }
+
+%  ┌────────────────────────┐
+%  │     Tikz Settings      │
+%  └────────────────────────┘
+    % % tikz packages
+    % \usepackage{tikz}
+    % \usepackage{tikzscale}
+    % \usetikzlibrary{plotmarks}
+    % \usetikzlibrary{arrows.meta}
+    % \usetikzlibrary{shapes.geometric, arrows}
+    % \usepackage{grffile}
+    % \usepackage{amsmath}
+    % \usepackage{pgfplots} 
+    % \usepackage{pgfgantt}
+    % \usepackage{pdflscape}
+    % \pgfplotsset{compat=newest} 
+    % \pgfplotsset{plot coordinates/math parser=false}
+    % \newlength\figureheight 
+    % \newlength\figurewidth 
+    % \newcommand\figurescale{1} % set default scaling to 1
+    %
+    % \tikzstyle{sampler} = [rectangle, rounded corners, 
+    %                        minimum width=1cm, minimum height=1cm,
+    %                        text centered, draw=black]
+    % \tikzstyle{filter}  = [rectangle, minimum width=2cm, 
+    %                        minimum height=1cm, text centered, 
+    %                        draw=black] %fill=orange!30
+    % \tikzstyle{box}     = [rectangle, minimum width=1cm, 
+    %                        minimum height=1cm, text centered, 
+    %                        draw=black] %fill=orange!30
+    % \tikzstyle{arrow}   = [thick,->,>=stealth]
+    % \tikzstyle{sum}     = [draw, fill=white, circle,
+    %                        minimum height=0.6cm]
+    %
+    % \begin{filecontents*}{sampler.tikz}
+    %     \begin{tikzpicture}[node distance=3cm]
+    %         \node (x)   {$x[n]$};
+    %         \node (u3)  [sampler, right of=x] {$↑$ 3};
+    %         \node (h)   [filter, right of=u3] {$H(z)$};
+    %         \node (d2)  [sampler, right of=h] {$↓$ 2};
+    %         \node (y)   [right of=d2] {$y[n]$};
+    %
+    %         \draw [arrow] (x)   -> (u3);
+    %         \draw [arrow] (u3)  -> (h);
+    %         \draw [arrow] (h)node[anchor=south,yshift=0.5cm]{Low-pass Filter} -> (d2);
+    %         \draw [arrow] (d2)  -> (y);
+    %     \end{tikzpicture}
+    % \end{filecontents*}
+
+% \RenewDocumentCommand{\matPlot}{mmmm}{}
+% \RenewDocumentCommand{\newFigure}{mmmm}{}
+% \RenewDocumentCommand{\matPlotTwo}{mmmmmmm}{}
+% \RenewDocumentCommand{\tikz}{mmm}{}

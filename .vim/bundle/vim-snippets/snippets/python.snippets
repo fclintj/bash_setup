@@ -2,6 +2,14 @@ snippet #!
 	#!/usr/bin/env python
 	# -*- coding: utf-8 -*-
 
+snippet pr
+	print("${1:message} %.2f"%(${0:var}))
+
+
+snippet fore
+	for ${1:counter}, ${2:value} in enumerate(${3:list}):
+		${0}
+
 snippet #!3
 	#!/usr/bin/env python3
 	# -*- coding: utf-8 -*-
@@ -13,6 +21,8 @@ snippet main
 	import sys
 	import numpy as np
 	import matplotlib.pyplot as plt
+	import time
+	from fractions import Fraction
 
 	def main():
 		${0}
@@ -50,12 +60,10 @@ snippet with
 		${0:${VISUAL}}
 # New Class
 snippet cl
-	class ${1:ClassName}(${2:object}):
-		"""${3:docstring for $1}"""
-		def __init__(self, ${4:arg}):
-			${5:super($1, self).__init__()}
-			self.$4 = $4
+	class ${1:ClassName}:
+		def __init__(self,arg=True):
 			${0}
+
 # New Function
 snippet def
 	def ${1:fname}(${2:`indent('.') ? 'self' : ''`}):
