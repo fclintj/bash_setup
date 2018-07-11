@@ -15,6 +15,9 @@ check_install autokey-gtk
 check_install tmux
 check_install exuberant-ctags
 check_install gdb
+check_install autoconf
+check_install inkscape
+check_install inkscape
 
 # YCM
 sudo apt-get install build-essential cmake
@@ -118,12 +121,7 @@ function check_install() {
     if (($(dpkg-query -W -f='${Status}' $1 2>/dev/null | grep -c "OK installed")==0))
     then 
         echo "The program "$1" is not installed. Would you like to install it? (Y/n)"
-        if [[ $(validate_Y_n) ]]
-        then
-            sudo apt install $1
-        else
-            echo $1 must be intalled for proper functionality 
-        fi
+            sudo apt install -y $1
     fi
 }
 

@@ -129,6 +129,36 @@
 # ┌────────────────────────┐
 # │  Formatting Functions  │
 # └────────────────────────┘
+    function rosBuild() {
+        path=$PWD
+
+        while [[ $path != $HOME && $path != \/ && $path != \/home ]]; do
+            if [[ -d "src" && -d "devel" && "build" ]]; then
+                catkin_make
+                source devel/setup.bash
+
+                # run launch file if available 
+                for i in $(<params); do 
+                    output+=" $i"
+                done 2>/dev/null
+
+                if [[ $output != "" ]]; then
+                    clear
+                    # print running title
+                    echo  "-------- Running --------"
+                    $output
+                fi
+                return 0
+            fi
+            path=${path%/*}
+        done
+
+        echo To build ROS, navigate to a folder or subfolder with:
+        echo 
+        echo -e '   build, devel, src'
+        return 1
+    }
+
     function print_title() {
         typeset spaces
         typeset i=0 
@@ -292,7 +322,7 @@ function findrm() {
 # ┌────────────────────────┐
 # │     PATH variables     │
 # └────────────────────────┘
-    source /opt/ros/melodic/setup.bash
+source /opt/ros/kinetic/setup.bash
 
 # ┌────────────────────────┐
 # │  General Instructions  │
@@ -324,6 +354,8 @@ alias lslarge='find -type f -exec ls -s {} \; | sort -n -r | head -5 | pv'
 # general directory/file locations
 alias cdsnippets='cd ~/.vim/bundle/vim-snippets/snippets'
 alias d='nemo . &'
+alias cdsnippets='cd ~/.vim/bundle/vim-snippets/snippets'
+alias d='nemo . &'
 alias e='nemo . &'
 
 alias bashrc='vim ~/.bashrc'
@@ -331,8 +363,8 @@ alias vimrc='vim ~/.vimrc'
 alias vim-run='vim ~/.vim/run_prog.sh'
 alias cdrtp='cd ~/Google\ Drive/School/Classes/Real\ Time\ Processors'
 alias cdFountain='cd ~/Google\ Drive/School/Classes/Mechatronics/prog/audio-fountain/src/'
-
-
+#bindings
+bind '"\e[24~":"rosBuild\n'
 
 # programs
 # export ARMADILLO_LIBRARY=/home/rcf-40/haifengc/panfs/armadillo-6.500.4/include

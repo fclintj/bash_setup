@@ -67,7 +67,7 @@ main() {
     elif [[ $1 == *.py ]]; then
         start=$(date +%s%3N)
         ctags -Rf .tags . 
-        python3 $1 $output
+        python $1 $output
 
     elif [[ $1 == *.pyx ]]; then
         start=$(date +%s%3N)
