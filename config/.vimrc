@@ -129,8 +129,8 @@
     inoremap <F10> <ESC> :w<CR>:silent !clear<CR>:!~/.vim/run_prog.sh %<CR>
     
     "" run program automatically from terminal 
-    noremap <F12> :w<CR>:silent !clear<CR>:!~/.vim/build_ros.sh %:p<CR>
-    inoremap <F12> <ESC> :w<CR>:silent !clear<CR>:!~/.vim/build_ros.sh %:p<CR>
+    noremap <F12> :w<CR>:silent !clear<CR>:!~/.vim/ros_build.sh %:p<CR>
+    inoremap <F12> <ESC> :w<CR>:silent !clear<CR>:!~/.vim/ros_build.sh %:p<CR>
 
     "" read ctags even if they are created in hidden file
     set tags=./tags;,tags;./.tags;,.tags;

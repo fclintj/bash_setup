@@ -129,13 +129,13 @@
 # ┌────────────────────────┐
 # │  Formatting Functions  │
 # └────────────────────────┘
-    function rosBuild() {
+    function ros_build() {
         path=$PWD
 
         while [[ $path != $HOME && $path != \/ && $path != \/home ]]; do
-            if [[ -d "src" && -d "devel" && "build" ]]; then
-                catkin_make
-                source devel/setup.bash
+            if [[ -d "$path/src" && -d "$path/devel" && "$path/build" ]]; then
+                catkin_make -C $path
+                source $path/devel/setup.bash
 
                 # run launch file if available 
                 for i in $(<params); do 
@@ -156,6 +156,7 @@
         echo To build ROS, navigate to a folder or subfolder with:
         echo 
         echo -e '   build, devel, src'
+        echo
         return 1
     }
 
@@ -364,7 +365,7 @@ alias vim-run='vim ~/.vim/run_prog.sh'
 alias cdrtp='cd ~/Google\ Drive/School/Classes/Real\ Time\ Processors'
 alias cdFountain='cd ~/Google\ Drive/School/Classes/Mechatronics/prog/audio-fountain/src/'
 #bindings
-bind '"\e[24~":"rosBuild\n'
+bind '"\e[24~":"ros_build\n'
 
 # programs
 # export ARMADILLO_LIBRARY=/home/rcf-40/haifengc/panfs/armadillo-6.500.4/include
