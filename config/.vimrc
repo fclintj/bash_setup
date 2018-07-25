@@ -24,11 +24,15 @@
     set display+=lastline " show as much as possible of last line 
     set nocompatible
     set clipboard=unnamed    
+    
+    " set unique file type loading
+    au BufRead,BufNewFile *.launch set filetype=launch
 
 
 "" ┌───────────────────┐
 "" │  restore cursor   │
 "" └───────────────────┘
+
     set viminfo='10,\"100,:20,%,n~/.viminfo
     function! ResCur()
       if line("'\"") <= line("$")
@@ -42,7 +46,6 @@
       autocmd BufWinEnter * call ResCur()
     augroup END
 
-    
 "" ┌───────────────────┐
 "" │    theme setup    │
 "" └───────────────────┘
@@ -90,7 +93,7 @@
     let g:ycm_python_binary_path = 'python'
 
     " " copy text from vim to other tmux pane
-    nnoremap <C-c><C-c> :SlimuxREPLSendLine<CR>
+    noremap <C-c><C-c> :SlimuxREPLSendLine<CR>
     vnoremap <C-c><C-c> :SlimuxREPLSendSelection<CR>
     nnoremap <C-c><C-v> :SlimuxREPLConfigure<CR>    
     
@@ -138,6 +141,7 @@
 "" ┌───────────────────┐
 "" │ general commands  │
 "" └───────────────────┘
+
     "" break line up into readable lengths
     map tw vipgqvipgc
     "" join broken line with comments into single paragraph

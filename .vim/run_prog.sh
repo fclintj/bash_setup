@@ -38,6 +38,12 @@ main() {
         start=$(date +%s%3N)
         swift $1 $output
 
+    elif [[ $1 == *.launch ]]; then
+        start=$(date +%s%3N)
+        echo $1
+
+        roslaunch $1
+
     elif [[ $1 == *.r ]]; then
         start=$(date +%s%3N)
         Rscript $1 $output

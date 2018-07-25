@@ -7,7 +7,7 @@ while [[ $path != $HOME && $path != \/ && $path != \/home ]]; do
         source $path/devel/setup.bash
 
         # run launch file if available 
-        for i in $(<params); do 
+        for i in $(<$path/params); do 
             output+=" $i"
         done 2>/dev/null
 

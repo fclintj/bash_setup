@@ -137,10 +137,12 @@
                 catkin_make -C $path
                 source $path/devel/setup.bash
 
+                output=""
                 # run launch file if available 
-                for i in $(<params); do 
+                for i in $(<$path/params); do 
                     output+=" $i"
                 done 2>/dev/null
+                echo $output
 
                 if [[ $output != "" ]]; then
                     clear
@@ -312,6 +314,62 @@ function findrm() {
     find -iname $1 -exec rm {} \; 
 }
 
+function num_args() {
+    echo "$@" |awk '{for(i=0;i<=NF;i++); print i-1 }'
+}
+
+function cd_func () {
+    local x2 the_new_dir adir index
+    local -i cnt
+
+    if [[ $1 ==  "--" ]]; then
+        dirs -v
+        return 0
+    fi
+
+    the_new_dir=$1
+    [[ -z $1 ]] && the_new_dir=$HOME
+
+    if [[ ${the_new_dir:0:1} == '-' ]]; then
+        #
+        # Extract dir N from dirs
+        index=${the_new_dir:1}
+        [[ -z $index ]] && index=1
+        adir=$(dirs +$index)
+        [[ -z $adir ]] && return 1
+        the_new_dir=$adir
+    fi
+
+    #
+    # '~' has to be substituted by ${HOME}
+    [[ ${the_new_dir:0:1} == '~' ]] && the_new_dir="${HOME}${the_new_dir:1}"
+
+    #
+    # Now change to the new dir and add to the top of the stack
+    pushd "${the_new_dir}" > /dev/null
+    [[ $? -ne 0 ]] && return 1
+    the_new_dir=$(pwd)
+
+    #
+    # Trim down everything beyond 11th entry
+    popd -n +11 2>/dev/null 1>/dev/null
+
+    #
+    # Remove any other occurence of this dir, skipping the top of the stack
+    for ((cnt=1; cnt <= 10; cnt++)); do
+        x2=$(dirs +${cnt} 2>/dev/null)
+        [[ $? -ne 0 ]] && return 0
+        [[ ${x2:0:1} == '~' ]] && x2="${HOME}${x2:1}"
+        if [[ "${x2}" == "${the_new_dir}" ]]; then
+            popd -n +$cnt 2>/dev/null 1>/dev/null
+            cnt=cnt-1
+        fi
+    done
+
+    return 0
+}
+
+
 # ┌────────────────────────┐
 # │     color settings     │
 # └────────────────────────┘
@@ -323,49 +381,54 @@ function findrm() {
 # ┌────────────────────────┐
 # │     PATH variables     │
 # └────────────────────────┘
+
+export QT_QPA_PLATFORMTHEME=qt5ct
 source /opt/ros/kinetic/setup.bash
 
 # ┌────────────────────────┐
 # │  General Instructions  │
 # └────────────────────────┘
 # turn on vim commands in terminal
-set -o vi
-
-case $- in *i*)
-        [ -z "$TMUX" ] && exec tmux # attach -t master 
-esac
+    set -o vi
+    
+    case $- in *i*)
+            [ -z "$TMUX" ] && exec tmux # attach -t master 
+    esac
 
 # # make mouse disappear after 0.2 seconds
 # unclutter -idle 0.2 -root &
 
 # pipe output from terminal into clipboard
-alias "c=xclip"
-alias "v=xclip -o"
-alias "cs=xclip -selection clipboard"
-alias "vs=xclip -o -selection clipboard"
-alias ls='ls --color=auto'
-alias grep='grep --color=auto'
-alias fgrep='fgrep --color=auto'
-alias egrep='egrep --color=auto'
-alias ll='ls -alF'
-alias la='ls -A'
-alias l='ls -CF'
-alias lslarge='find -type f -exec ls -s {} \; | sort -n -r | head -5 | pv'
+    alias "c=xclip"
+    alias "v=xclip -o"
+    alias "cs=xclip -selection clipboard"
+    alias "vs=xclip -o -selection clipboard"
+    alias ls='ls --color=auto'
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
+    alias ll='ls -alF'
+    alias la='ls -A'
+    alias l='ls -CF'
+    alias lslarge='find -type f -exec ls -s {} \; | sort -n -r | head -5 | pv'
 
 # general directory/file locations
-alias cdsnippets='cd ~/.vim/bundle/vim-snippets/snippets'
-alias d='nemo . &'
-alias cdsnippets='cd ~/.vim/bundle/vim-snippets/snippets'
-alias d='nemo . &'
-alias e='nemo . &'
+    alias cdsnippets='cd ~/.vim/bundle/vim-snippets/snippets'
+    alias d='nemo . &'
+    alias e='nemo . &'
+    alias cd=cd_func
 
-alias bashrc='vim ~/.bashrc'
-alias vimrc='vim ~/.vimrc'
-alias vim-run='vim ~/.vim/run_prog.sh'
-alias cdrtp='cd ~/Google\ Drive/School/Classes/Real\ Time\ Processors'
-alias cdFountain='cd ~/Google\ Drive/School/Classes/Mechatronics/prog/audio-fountain/src/'
-#bindings
-bind '"\e[24~":"ros_build\n'
+    alias bashrc='vim ~/.bashrc'
+    alias vimrc='vim ~/.vimrc'
+    alias vim-run='vim ~/.vim/run_prog.sh'
+    alias cdrtp='cd ~/Google\ Drive/School/Classes/Real\ Time\ Processors'
+    alias open="xdg-open"
+    alias default="xdg-open"
+    alias piksi="/home/clint/Downloads/swift_console_v1.5.12_linux/console -b 1000000 -p /dev/ttyUSB0"
+# bindings
+    bind '"\e[24~":"ros_build\n'
+    alias roskill='killall -9 rosmaster'
 
-# programs
-# export ARMADILLO_LIBRARY=/home/rcf-40/haifengc/panfs/armadillo-6.500.4/include
+# update ROS variable env
+    ros_build
+    clear
