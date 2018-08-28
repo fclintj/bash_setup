@@ -382,8 +382,8 @@ function cd_func () {
 # │     PATH variables     │
 # └────────────────────────┘
 
-export QT_QPA_PLATFORMTHEME=qt5ct
-source /opt/ros/kinetic/setup.bash
+export QT_QPA_PLATFORMTHEME=gtk2
+# source /opt/ros/kinetic/setup.bash
 
 # ┌────────────────────────┐
 # │  General Instructions  │

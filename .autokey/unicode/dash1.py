@@ -1,13 +1,4 @@
-import sys
-reload(sys)
-sys.setdefaultencoding('utf8')
-from subprocess import Popen, PIPE
-
-def paste_character(symbol):
-    c = Popen(['xclip', '-selection', 'clipboard'], stdin=PIPE)
-    c.communicate(symbol.encode('utf-8'))
-    keyboard.send_keys('<ctrl>+<shift>+v')
-    
-paste_character('―')
-
-
+# — U+2014 em dash takes place of comma, period... etc
+# en dash (2013) gives range of numbers, scores, compound adjectives
+keyboard.send_keys("<ctrl>+<shift>+u+" + "2014")
+keyboard.send_keys("<ctrl>"+" ")
