@@ -39,10 +39,11 @@ main() {
         swift $1 $output
 
     elif [[ $1 == *.launch ]]; then
+        ros_build
         start=$(date +%s%3N)
         echo $1
 
-        roslaunch $1
+        roslaunch $1 $output
 
     elif [[ $1 == *.r ]]; then
         start=$(date +%s%3N)
@@ -93,7 +94,7 @@ main() {
             mkdir build
         fi
         start=$(date +%s%3N)
-        xelatex -output-directory=build $name
+        lualatex --output-directory=build $name
         mv build/${name%.*}.pdf ./
         
         # update .bib file if necessary
