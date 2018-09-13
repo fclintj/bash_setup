@@ -26,6 +26,7 @@ check_install libffi-dev
 check_install python-dev
 sudo apt-get -y install python-numpy python-scipy python-matplotlib 
 sudo apt-get -y install python3-numpy python3-scipy python3-matplotlib 
+sudo apt-get -y install texlive-xetex
 
 echo Specified packages verified.
 exit 0

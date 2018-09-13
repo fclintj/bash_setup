@@ -404,8 +404,8 @@ function cd_func () {
 # └────────────────────────┘
 
 export QT_QPA_PLATFORMTHEME=gtk2
-source /opt/ros/kinetic/setup.bash
 export PYTHONPATH="${PYTHONPATH}:/opt/ros/kinetic/share/"
+# source /opt/ros/kinetic/setup.bash
 
 # ┌────────────────────────┐
 # │  General Instructions  │

@@ -17,7 +17,6 @@ check_install exuberant-ctags
 check_install gdb
 check_install autoconf
 check_install inkscape
-check_install inkscape
 
 # YCM
 sudo apt-get install build-essential cmake
