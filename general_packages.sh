@@ -15,6 +15,8 @@ check_install gtkpod
 check_install easytag 
 check_install build-essential
 check_install okular 
+check_install imagemagick
+check_install pdftk
 
 # install python
 check_install python-pip 

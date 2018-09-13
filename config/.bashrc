@@ -162,6 +162,16 @@
         return 1
     }
 
+    function rosbag2csv() {
+           bagName="$1"
+           topics="${@:2}"
+
+           for topic in $topics ; do
+               writeName=${topic/\//}
+               rostopic echo -b $bagName -p $topic > ${writeName//\//\-}.csv
+           done
+       } 
+
     function print_title() {
         typeset spaces
         typeset i=0 
@@ -224,6 +234,17 @@ function check_install() {
             echo $1 must be intalled for proper functionality 
         fi
     fi
+}
+
+function img2pdf() {
+    mkdir tmp_convert_pdf
+    for img in "$@" ; do
+        convert $img ${img%.*}.pdf
+        mv ${img%.jpg}.pdf tmp_convert_pdf
+    done
+
+    pdftk ./tmp_convert_pdf/*.pdf cat output combined.pdf
+    rm -r tmp_convert_pdf
 }
 
 function validate_Y_n() {
@@ -382,8 +403,9 @@ function cd_func () {
 # │     PATH variables     │
 # └────────────────────────┘
 
-export QT_QPA_PLATFORMTHEME=qt5ct
+export QT_QPA_PLATFORMTHEME=gtk2
 source /opt/ros/kinetic/setup.bash
+export PYTHONPATH="${PYTHONPATH}:/opt/ros/kinetic/share/"
 
 # ┌────────────────────────┐
 # │  General Instructions  │
