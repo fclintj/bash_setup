@@ -23,8 +23,8 @@
                        " /copyright\C " Case sensitive 
     set display+=lastline " show as much as possible of last line 
     set nocompatible
-    set clipboard=unnamed    
-    
+    set autoread | au CursorHold * checktime | call feedkeys("lh")
+    "
     " set unique file type loading
     au BufRead,BufNewFile *.launch set filetype=launch
 

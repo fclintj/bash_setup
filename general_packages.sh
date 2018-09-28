@@ -8,6 +8,7 @@ main(){
 # check if proper packages are installed 
 check_install autokey-gtk
 check_install texlive-full
+check_install texlive-texlive-xetex
 check_install inkscape
 check_install handbrake
 check_install audacity

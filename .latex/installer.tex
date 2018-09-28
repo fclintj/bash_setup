@@ -1,0 +1,64 @@
+\documentclass{article}
+
+% most used packages
+\usepackage[utf8]{inputenc}	% allows new character options
+\usepackage[a4paper]{geometry} % Paper dimensions and margins
+\usepackage{titletoc}   % change Table of Contents settings
+\usepackage{etoolbox}   % alters toc settings (learn in future)
+\usepackage{fancyhdr}   % include document header
+\usepackage{hyperref}	% creates hyper-link color options
+\usepackage{url}    	% package for url links
+\usepackage{graphicx}	% manage images and graphics
+\usepackage{subcaption} % add two plots together
+\usepackage{color}      % include colors for 
+\usepackage{floatrow}	% allows placement of figures [H]
+\usepackage{enumitem}   % create lists
+\usepackage{scrextend}  % \begin{addmargin}[<left indent>]{<indent>}
+\usepackage{listings, lstautogobble} % includes ability to input code
+\usepackage{amsmath}    % allows equations to be split
+\usepackage{cleveref}	% (\Cref) include "Figure" on \reff
+\usepackage{biblatex}
+
+% tables
+\usepackage{booktabs}   % allows for \toprule in tables
+\usepackage{tabulary}	% table columns size of their contents (on page)
+\usepackage{tabularx}
+\newcolumntype{b}{>{\hsize=2.3\hsize}X}
+\newcolumntype{s}{>{\hsize=.45\hsize}X}
+\newcolumntype{m}{>{\hsize=.9\hsize}X}
+
+% checkmark with tikz
+\usepackage{tikz}
+\def\checkmark{\tikz\fill[scale=0.4](0,.35) -- (.25,0) -- (1,.7) -- (.25,.15) -- cycle;} 
+
+% math packages
+\usepackage{bm}         % use of bold characters in math mode
+\usepackage[nomessages]{fp} % calculations in latex
+% function to create magnitude bars around a function
+\newcommand\longvar[1]{\mathchardef\UrlBreakPenalty=100
+\mathchardef\UrlBigBreakPenalty=100\url{#1}}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+
+% packages used in past
+\usepackage{pdfpages}   % include entire pdf documents
+\usepackage{xstring}    % StrSubstitute replace character
+\usepackage{caption}    % removes figure from LoF: \caption[]{}
+
+% tikz packages
+\usepackage{tikz}
+\usepackage{tikzscale}
+\usetikzlibrary{plotmarks}
+\usetikzlibrary{arrows.meta}
+\usetikzlibrary{shapes.geometric, arrows}
+\usepackage{grffile}
+\usepackage{amsmath}
+\usepackage{pgfplots} 
+\usepackage{pgfgantt}
+\usepackage{pdflscape}
+\pgfplotsset{compat=newest} 
+\pgfplotsset{plot coordinates/math parser=false}
+        
+\begin{document}
+    Packages installed!
+
+\end{document}

@@ -162,13 +162,59 @@
         return 1
     }
 
+    function rosbagSplit() {
+        bag_file="$1"
+        start_sec="$2"
+        end_sec="$3"
+
+
+        info=$(rosbag info $bag_file)
+
+        count=0
+        start_found=0
+        end_found=0
+        for data in $info ; do
+            if [[ ${data/:*} == start ]]; then
+                start_found=1
+                count=0
+            fi
+
+            if [ $count == 5 -a $start_found == 1 ]; then
+                clock_start=$(echo $data| sed -e "s/[()]//g")
+                count=0
+                start_found=0
+            fi
+
+            if [[ ${data/:*} == end ]]; then
+                end_found=1
+                count=0
+            fi
+
+            if [ $count == 5 -a $end_found == 1 ]; then
+                clock_end=$(echo $data| sed -e "s/[()]//g")
+                count=0
+                end_found=0
+            fi
+
+            ((count++))
+        done
+
+        duration=$(echo $end_sec  - $start_sec | bc)
+        record_start=$(echo $clock_start + $start_sec | bc)
+        record_end=$(echo $record_start + $duration | bc)
+
+        echo $duration
+
+        rosbag filter "$1" "${1/.bag}"-$start_sec-$end_sec.bag "t.secs >= $record_start and t.secs <= $record_end"
+    }
+
     function rosbag2csv() {
            bagName="$1"
            topics="${@:2}"
 
            for topic in $topics ; do
-               writeName=${topic/\//}
-               rostopic echo -b $bagName -p $topic > ${writeName//\//\-}.csv
+               witeNameTopic=${topic/\//}
+               rostopic echo -b $bagName -p $topic > ${bagName%.bag}-${witeNameTopic//\//\-}.csv
            done
        } 
 
@@ -404,7 +450,6 @@ function cd_func () {
 # └────────────────────────┘
 
 export QT_QPA_PLATFORMTHEME=gtk2
-export PYTHONPATH="${PYTHONPATH}:/opt/ros/kinetic/share/"
 # source /opt/ros/kinetic/setup.bash
 
 # ┌────────────────────────┐
@@ -446,7 +491,15 @@ export PYTHONPATH="${PYTHONPATH}:/opt/ros/kinetic/share/"
     alias cdrtp='cd ~/Google\ Drive/School/Classes/Real\ Time\ Processors'
     alias open="xdg-open"
     alias default="xdg-open"
-    alias piksi="/home/clint/Downloads/swift_console_v1.5.12_linux/console -b 1000000 -p /dev/ttyUSB0"
+    alias rover1="/home/clint/Downloads/piksi_console_v0.30.9/console -b 1000000 -p /dev/rover1"
+    alias piksi0="/home/clint/Downloads/piksi_console_v0.30.9/console -b 1000000 -p /dev/ttyUSB0"
+    alias piksi1="/home/clint/Downloads/piksi_console_v0.30.9/console -b 1000000 -p /dev/ttyUSB1"
+    alias piksi2="/home/clint/Downloads/piksi_console_v0.30.9/console -b 1000000 -p /dev/ttyUSB2"
+    alias cdEst="cd /home/clint/Dropbox/School/OptEst/"
+    alias cdRob="cd /home/clint/Dropbox/School/OptRob/"
+    alias cdLin="cd /home/clint/Dropbox/School/LinMul/"
+
+
 # bindings
     bind '"\e[24~":"ros_build\n'
     alias roskill='killall -9 rosmaster'
@@ -454,3 +507,4 @@ export PYTHONPATH="${PYTHONPATH}:/opt/ros/kinetic/share/"
 # update ROS variable env
     ros_build
     clear
+# source /opt/ros/melodic/setup.bash
